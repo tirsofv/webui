@@ -23,13 +23,13 @@ export class CronListComponent {
   protected entityList: any;
 
   public columns: Array < any > = [
-    { name: T('Users'), prop: 'cron_user' },
+    { name: T('Users'), prop: 'cron_user', width: 100 },
     { name: T('Command'), prop: 'cron_command' },
     { name: T('Description'), prop: 'cron_description' },
-    { name: T('Minute'), prop: 'cron_minute' },
-    { name: T('Hour'), prop: 'cron_hour' },
+    { name: T('Minute'), prop: 'cron_minute', width: 100 },
+    { name: T('Hour'), prop: 'cron_hour', width: 100 }, 
     { name: T('Day of Month'), prop: 'cron_daymonth' },
-    { name: T('Month'), prop: 'cron_month' },
+    { name: T('Month'), prop: 'cron_month', width: 100 },
     { name: T('Day of Week'), prop: 'cron_dayweek' },
     { name: T('Redirect Stdout'), prop: 'cron_stdout', hidden: true },
     { name: T('Redirect Stderr'), prop: 'cron_stderr', hidden: true },
