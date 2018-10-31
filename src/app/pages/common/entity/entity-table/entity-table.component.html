@@ -78,7 +78,7 @@
       [columnWidth]="'auto'"
       [headerHeight]="'50'" 
       [footerHeight]="'50'" 
-      [rowHeight]="50" 
+      [rowHeight]="'auto'" 
       [reorderable]="true"
       [limit]="paginationPageSize" 
       [externalPaging]="true"
@@ -91,8 +91,8 @@
       [selected]='selected'
       (select)='onSelect($event)'
       [style.height.px]="tableHeight"
-      [scrollbarH]='true'
-      [scrollbarV]='true'
+      [scrollbarH]='false'
+      [scrollbarV]='false'
       #entityTable>
 
       <ngx-datatable-footer>
@@ -155,7 +155,9 @@
       <ngx-datatable-column
                *ngFor="let col of conf.columns"
                prop="{{col.prop}}"
-               name="{{col.name | translate}}">
+               name="{{col.name | translate}}"
+               width={{col.width}}
+               maxWidth={{col.minWidth}}>
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div id="{{col.prop}}_{{row[col.prop]}}" 
                title="{{convertDisplayValue(row[col.prop])}}" [ngClass]="col.icon ? 'IconCell' : ''">

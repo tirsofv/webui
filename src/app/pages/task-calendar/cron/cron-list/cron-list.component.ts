@@ -25,14 +25,14 @@ export class CronListComponent {
   public columns: Array < any > = [
     { name: T('Users'), prop: 'cron_user' },
     { name: T('Command'), prop: 'cron_command' },
-    { name: T('Description'), prop: 'cron_description' },
-    { name: T('Minute'), prop: 'cron_minute' },
-    { name: T('Hour'), prop: 'cron_hour' },
-    { name: T('Day of Month'), prop: 'cron_daymonth' },
+    { name: T('Description'), prop: 'cron_description', width: 500 },
+    { name: T('Minute'), prop: 'cron_minute', width: 100 },
+    { name: T('Hour'), prop: 'cron_hour', width: 100 },
+    { name: T('Day of Month'), prop: 'cron_daymonth', maxWidth: '200' },
     { name: T('Month'), prop: 'cron_month' },
     { name: T('Day of Week'), prop: 'cron_dayweek' },
-    { name: T('Redirect Stdout'), prop: 'cron_stdout', hidden: true },
-    { name: T('Redirect Stderr'), prop: 'cron_stderr', hidden: true },
+    { name: T('Redirect Stdout'), prop: 'cron_stdout' },
+    { name: T('Redirect Stderr'), prop: 'cron_stderr' },
     { name: T('Enabled'), prop: 'cron_enabled' },
   ];
   public config: any = {
