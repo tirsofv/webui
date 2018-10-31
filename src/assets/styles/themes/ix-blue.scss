@@ -1060,4 +1060,11 @@ $primary-dark: darken( map-get($md-primary, 500), 8% );
     @include variable(color, --fg2, $fg2 !important);
   }
 
+  app-cron-list .datatable-header-cell-label,
+  app-cron-list .datatable-body-cell,
+  app-user-list .datatable-header-cell-label,
+  app-user-list .datatable-body-cell {
+    font-size: 85%;
+  }
+
 } // end of ix theme
