@@ -51,10 +51,10 @@
   </ul>
 </div>
 <!-- End checkbox ------------------------------ -->
-
-  <div fxLayout="row wrap" fxLayoutAlign="start center" class="multiActionsButton">
+<div id="actionButtons">
+  <div class="multiActionsButton">
     <div [style.visibility]="selected.length > 0 ? 'visible' : 'hidden'" >
-      <div *ngIf="conf.multiActions; else defaultMultiActions" fxFlex="100">
+      <div *ngIf="conf.multiActions; else defaultMultiActions" >
         <span *ngFor="let maction of conf.multiActions">
           <button id="{{ maction?.id }}" 
             mat-button matTooltip="{{ maction?.label  | translate }}" [matTooltipPosition]=maction?.ttpos 
@@ -69,6 +69,24 @@
       </ng-template>
     </div>
   </div>
+  <div class="singleActionsButton">
+    <div *ngIf="selected.length === 1 ? true : false" >
+      <div *ngIf="conf.singleActions; " >
+        <span *ngFor="let action of conf.singleActions">
+          <button id="{{ action.id }}" 
+            mat-button matTooltip="{{ action.label | translate }}" [matTooltipPosition]=action.ttpos 
+            *ngIf="action.enable" (click)="action.onClick(this.selected);">
+            <mat-icon>{{ action.icon }}</mat-icon>
+          </button>
+        </span>
+      </div>
+    </div> 
+  </div>
+</div>
+
+
+
+
 
   <div>
     <ngx-datatable *ngIf="showDefaults" class='material' 

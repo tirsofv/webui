@@ -15,9 +15,15 @@
     padding-left: 5px;
 }
 
-.multiActionsButton {
+.multiActionsButton, .singleActionsButton {
     position: relative;
     top: 1px;
+    display: inline-block;
+}
+
+#actionButtons {
+    position: relative;
+    display: inline-block;
 }
 
 #col-select-box {

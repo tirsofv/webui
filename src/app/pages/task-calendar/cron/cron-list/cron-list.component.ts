@@ -21,6 +21,7 @@ export class CronListComponent {
   protected route_add_tooltip = "Add Cron Job";
   protected route_edit: string[] = ['tasks', 'cron', 'edit'];
   protected entityList: any;
+  protected wsMultiDelete = 'core.bulk';
 
   public columns: Array < any > = [
     { name: T('Users'), prop: 'cron_user' },
@@ -38,11 +39,51 @@ export class CronListComponent {
   public config: any = {
     paging: true,
     sorting: { columns: this.columns },
+    multiSelect: true,
     deleteMsg: {
       title: 'Cron Job',
       key_props: ['cron_user', 'cron_command', 'cron_description']
     },
   };
+
+  public multiActions: Array < any > = [{
+      id: "mdelete",
+      label: T("Delete"),
+      icon: "delete",
+      enable: true,
+      ttpos: "above",
+      onClick: (selected) => {
+        this.entityList.doMultiDelete(selected);
+      }
+    },
+  ];
+
+  public singleActions: Array < any > = [
+    {
+      id: "edit",
+      label: "Edit",
+      icon: "edit",
+      ttpos: "above",
+      enable: true,
+      onClick: (selected) => { console.log('edit')
+        // let selectedJails = this.getSelectedNames(selected);
+        // this.router.navigate(
+        //   new Array('').concat(["jails", "edit", selectedJails[0][0]]));
+      }
+    },
+    {
+      id: "runnow",
+      label: "Run Now",
+      icon: "play_arrow",
+      ttpos: "above",
+      enable: true,
+      onClick: (selected) => { console.log('run now')
+        // let selectedJails = this.getSelectedNames(selected);
+        // this.router.navigate(
+        //   new Array('').concat(["jails", "storage", selectedJails[0][0]]));
+      }
+    }
+  ];
 
   protected month_choice: any;
   constructor(protected router: Router, protected rest: RestService, protected translate: TranslateService,
@@ -85,5 +126,19 @@ export class CronListComponent {
     });
 
     return actions;
+  }
+
+  getSelectedIds(selectedCronJobs) {
+    let selected: any = [];
+    for (let i in selectedCronJobs) {
+      selected.push([selectedCronJobs[i].id]);
+    }
+    return selected;
+  }
+
+  wsMultiDeleteParams(selected: any) {
+    let params: Array<any> = ['cronjob.delete'];
+    params.push(this.getSelectedIds(selected));
+    return params;
   }
 }
