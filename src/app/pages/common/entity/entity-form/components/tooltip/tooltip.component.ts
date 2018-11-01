@@ -25,6 +25,7 @@ export class TooltipComponent {
     let posX = this.tooltip.nativeElement.getBoundingClientRect().left;
     let posY = this.tooltip.nativeElement.getBoundingClientRect().bottom;
     let dynamicWidth = this.message.length * 9.5;
+    let minPercent = screenW * 0.2188; // check leftover screen space by percent, not 420 pixels
 
     if((posY / screenH > .85)) {
       this.tooltip.nativeElement.lastElementChild.id = "raised-tooltip";
@@ -33,10 +34,10 @@ export class TooltipComponent {
     }
 
     if(this.message.length <= 40) {
-      if((screenW - posX) > 420) {
+      if((screenW - posX) > minPercent) {
         this.tooltipMsgStyle = {'left' : '0px', 'max-width' : dynamicWidth + 'px'};
       }
-      else if(posX > 420) {
+      else if(posX > minPercent) {
         this.tooltipMsgStyle = {'right' : '0px', 'max-width' :  dynamicWidth + 'px'};
       }
       else {
@@ -45,10 +46,10 @@ export class TooltipComponent {
       }    
     }
     else {
-      if((screenW - posX) > 420) {
+      if((screenW - posX) > minPercent) {
         this.tooltipMsgStyle = {'left' : '0px'};
       }
-      else if(posX > 420) {
+      else if(posX > minPercent) {
         this.tooltipMsgStyle = {'right' : '0px'};
       }
       else {
