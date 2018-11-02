@@ -65,10 +65,9 @@ export class CronListComponent {
       icon: "edit",
       ttpos: "above",
       enable: true,
-      onClick: (selected) => { console.log('edit')
-        // let selectedJails = this.getSelectedNames(selected);
-        // this.router.navigate(
-        //   new Array('').concat(["jails", "edit", selectedJails[0][0]]));
+      onClick : (selected) => {
+        this.router.navigate(new Array('/').concat(
+          [ 'tasks', 'cron', 'edit', selected[0].id ]));
       }
     },
     {
@@ -77,10 +76,18 @@ export class CronListComponent {
       icon: "play_arrow",
       ttpos: "above",
       enable: true,
-      onClick: (selected) => { console.log('run now')
-        // let selectedJails = this.getSelectedNames(selected);
-        // this.router.navigate(
-        //   new Array('').concat(["jails", "storage", selectedJails[0][0]]));
+      onClick: (selected) => { 
+        this.dialog.confirm(T("Run Now"), T("Run this cron job now?"), true).subscribe((run) => {
+          if (run) {
+            this.rest.post(this.resource_name + '/' + selected[0].id + '/run/', {} ).subscribe((res) => {
+              this.translate.get("close").subscribe((close) => {
+                this.entityList.snackBar.open(res.data, close, { duration: 5000 });
+              });
+            }, (err) => {
+              new EntityUtils().handleError(this, err);
+            });
+          }
+        });
       }
     }
   ];
