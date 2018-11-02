@@ -61,20 +61,19 @@ export class StorageListComponent {
       enable: true,
       ttpos: "above",
       onClick: (selected) => {
-        this.doDelete(selected);
+        selected.length > 1 ? this.doMultiDelete(selected) : this.doDelete(selected[0]);
       }
     },
   ];
 
   public singleActions: Array < any > = [{
-      id: "eddit",
+      id: "edit",
       label: T("Edit"),
       icon: "edit",
       enable: true,
       ttpos: "above",
       onClick: (selected) => {
-        // console.log(selected)
-        // this.entityList.doMultiDelete(selected);
+        this.router.navigate(new Array('/').concat(this.route_edit, selected[0].id));
       }
     },
   ];
@@ -107,15 +106,9 @@ export class StorageListComponent {
   }
 
   getData () {
-
   }
 
   doDelete(item) {
-    const req = [];
-    for (const i of item) {
-      req.push({"action": "REMOVE", "index": i.id});
-    }
-    console.log(req)
     let deleteMsg =  "Delete Mount Point <b>" + item['source'] + '</b>?';
     this.translate.get(deleteMsg).subscribe((res) => {
       deleteMsg = res;
@@ -125,8 +118,37 @@ export class StorageListComponent {
         this.loader.open();
         this.loaderOpen = true;
         let data = {};
-        this.busy = this.ws.job('core.bulk', ['jail.fstab', [this.jailId, req ]]).subscribe(
+        this.busy = this.ws.call('jail.fstab', [this.jailId, { "action": "REMOVE", "index": item.id}]).subscribe(
           (res) => { this.getData() },
+          (res) => {
+            new EntityUtils().handleError(this, res);
+            console.log('hey')
+            this.loader.close();
+          }
+        );
+      }
+    })
+  }
+
+  doMultiDelete(item) {
+    const req = [];
+    for (const i of item) {
+      req.push([this.jailId, {"action": "REMOVE", "index": i.id}]);
+    }
+    let deleteMsg =  "Delete Mount Point <b>" + item['source'] + '</b>?';
+    this.translate.get(deleteMsg).subscribe((res) => {
+      deleteMsg = res;
+    });
+    this.dialog.confirm(T("Delete"), deleteMsg, false, T('Delete Mount Point')).subscribe((res) => {
+      if (res) {
+        this.loader.open();
+        this.loaderOpen = true;
+        let data = {};
+        this.busy = this.ws.job('core.bulk', ['jail.fstab', req]).subscribe(
+          (res) => { 
+            this.getData() 
+            this.loader.close();
+          },
           (res) => {
             new EntityUtils().handleError(this, res);
             this.loader.close();
