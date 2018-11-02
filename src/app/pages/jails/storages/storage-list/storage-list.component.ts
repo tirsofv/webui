@@ -47,11 +47,37 @@ export class StorageListComponent {
   public config: any = {
     paging: true,
     sorting: { columns: this.columns },
+    multiSelect: true,
     deleteMsg: {
       title: 'Mount Point',
       key_props: ['source', 'destination']
     },
   };
+
+  public multiActions: Array < any > = [{
+      id: "mdelete",
+      label: T("Delete"),
+      icon: "delete",
+      enable: true,
+      ttpos: "above",
+      onClick: (selected) => {
+        this.doDelete(selected);
+      }
+    },
+  ];
+
+  public singleActions: Array < any > = [{
+      id: "eddit",
+      label: T("Edit"),
+      icon: "edit",
+      enable: true,
+      ttpos: "above",
+      onClick: (selected) => {
+        // console.log(selected)
+        // this.entityList.doMultiDelete(selected);
+      }
+    },
+  ];
 
   afterInit(entityTable) {
     entityTable.doDelete = this.doDelete;
@@ -85,6 +111,11 @@ export class StorageListComponent {
   }
 
   doDelete(item) {
+    const req = [];
+    for (const i of item) {
+      req.push({"action": "REMOVE", "index": i.id});
+    }
+    console.log(req)
     let deleteMsg =  "Delete Mount Point <b>" + item['source'] + '</b>?';
     this.translate.get(deleteMsg).subscribe((res) => {
       deleteMsg = res;
@@ -94,7 +125,7 @@ export class StorageListComponent {
         this.loader.open();
         this.loaderOpen = true;
         let data = {};
-        this.busy = this.ws.call('jail.fstab', [this.jailId, { "action": "REMOVE", "index": item.id}]).subscribe(
+        this.busy = this.ws.job('core.bulk', ['jail.fstab', [this.jailId, req ]]).subscribe(
           (res) => { this.getData() },
           (res) => {
             new EntityUtils().handleError(this, res);
