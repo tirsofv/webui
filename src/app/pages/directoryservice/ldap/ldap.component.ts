@@ -77,7 +77,7 @@ export class LdapComponent {
       name : 'ldap_hostname_noreq',
       placeholder : T('Hostname'),
       tooltip: T('The hostname or IP address of the LDAP server.'),
-      
+
     },
     {
       type : 'input',
@@ -364,7 +364,7 @@ export class LdapComponent {
       else{
         this.entityForm.formGroup.controls['ldap_hostname'].setValue(this.entityForm.formGroup.controls['ldap_hostname_noreq'].value);
       }
-      
+
     })
   }
   beforeSubmit(data){

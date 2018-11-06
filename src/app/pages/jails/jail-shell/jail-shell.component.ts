@@ -119,7 +119,7 @@ export class JailShellComponent implements OnInit, OnChanges, OnDestroy {
       rowNum = 10;
     }
 
-    this.xterm = new (<any>window).Terminal({ 
+    this.xterm = new (<any>window).Terminal({
       'cursorBlink': true,
       'tabStopWidth': 8,
       'cols': 80,

@@ -90,7 +90,7 @@ export class DeviceEditComponent implements OnInit {
       inputType: 'number'
     },
   ];
-  //disk 
+  //disk
   public diskFieldConfig: FieldConfig[] = [
     {
       name : 'path',
@@ -373,7 +373,7 @@ export class DeviceEditComponent implements OnInit {
       else {
         console.log(deviceInformation,value,activeformgroup)
       }
-      
+
 
     }
   }
@@ -459,7 +459,7 @@ export class DeviceEditComponent implements OnInit {
           {
             label : zvol.id, value : '/dev/zvol/' + zvol.id
           }
-        );   
+        );
       });
     });
 
@@ -491,7 +491,7 @@ export class DeviceEditComponent implements OnInit {
         "attributes":deviceValue,
         "order": deviceOrder
       };
-  
+
       this.loader.open();
       this.ws.call(this.updateCall, [ params.pk, payload ]).subscribe(() => {
           this.loader.close();
