@@ -16,11 +16,14 @@
         </a>
       </nav>
 
+      <!-- Toolbar -->
+      <entity-toolbar></entity-toolbar>
+
       <!-- Layout and Report Builder -->
       <div class="reports-dash-global-controls" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="32px">
 
         <!-- Layout Switcher -->
-        <div fxFlex="100" fxFlex.gt-xs="116px">
+        <div fxFlex="100" fxFlex.gt-xs="116px" style="display:none;">
           <h4 class="fieldset-label">Layout</h4>
           <mat-button-toggle-group 
             #chartWidth="matButtonToggleGroup" *ngIf="tabChartsMappingDataSelected">
@@ -35,11 +38,11 @@
 
         <!-- Report builder was 632px wide -->
         <ng-container *ngIf="tabChartsMappingDataSelected && tabChartsMappingDataSelected.keyName == 'Disk'">
-          <entity-form-embedded fxFlex="100" fxFlex.gt-xs="632px" [target]="target" [data]="values" [conf]="this" ></entity-form-embedded>
+          <entity-form-embedded style="display:none" fxFlex="100" fxFlex.gt-xs="632px" [target]="target" [data]="values" [conf]="this" ></entity-form-embedded>
         </ng-container>
 
           <!-- Pager -->
-          <div fxFlex="100" fxFlex.gt-xs="420px" *ngIf="tabChartsMappingDataSelected && tabChartsMappingDataSelected.keyName == 'Disk'">
+          <div style="display:none" fxFlex="100" fxFlex.gt-xs="420px" *ngIf="tabChartsMappingDataSelected && tabChartsMappingDataSelected.keyName == 'Disk'">
             <!--<div>-->
             <h4 class="fieldset-label">Pager</h4>
             <mat-paginator #pager 

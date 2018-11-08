@@ -1,8 +1,6 @@
-
-
 import { CommonModule } from '@angular/common';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+/*import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../appMaterial.module';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MatSortHeader, MatSort } from '@angular/material';
@@ -52,25 +50,26 @@ import { EntityDialogComponent } from './entity-dialog/entity-dialog.component';
 
 import { FormPermissionsComponent } from './entity-form/components/form-permissions/form-permissions.component';
 import { EntityJobComponent } from './entity-job/entity-job.component';
-
+*/
 // CDK
 import { CdkTableModule } from '@angular/cdk/table';
 import { OverlayModule } from '@angular/cdk/overlay';
 import {A11yModule} from '@angular/cdk/a11y';
+import { EntityToolbarComponent } from './entity-toolbar.component';
 
-import { SmdFabSpeedDialTrigger, SmdFabSpeedDialActions, SmdFabSpeedDialComponent } from './fab-speed-dial/fab-speed-dial';
-import { EntityDashboardComponent } from './entity-dashboard/entity-dashboard.component';
-import { EntityToolbarModule } from './entity-toolbar/entity-toolbar.module'; 
+/*import { SmdFabSpeedDialTrigger, SmdFabSpeedDialActions, SmdFabSpeedDialComponent } from './fab-speed-dial/fab-speed-dial';
+import { EntityDashboardComponent } from './entity-dashboard/entity-dashboard.component';*/
 
 @NgModule({
   imports: [
-    CommonModule, FormsModule, ReactiveFormsModule,
+    /*CommonModule, FormsModule, ReactiveFormsModule,
     MaterialModule, ColorPickerModule, NgxDatatableModule, CdkTableModule, TreeModule,
-    Ng2DropdownModule, NgUploaderModule, FlexLayoutModule, TranslateModule,
-    OverlayModule, A11yModule, EntityToolbarModule
+    Ng2DropdownModule, NgUploaderModule, FlexLayoutModule, TranslateModule,*/
+    CdkTableModule, OverlayModule, A11yModule
   ],
   declarations: [
-    EntityTableComponent,
+    EntityToolbarComponent
+    /*EntityTableComponent,
     EntityCardComponent,
     EntityCardActionsComponent,
     EntityTableActionsComponent,
@@ -107,10 +106,11 @@ import { EntityToolbarModule } from './entity-toolbar/entity-toolbar.module';
     EntityTaskComponent,
     FormParagraphComponent,
     EntityDialogComponent,
-    EntityDashboardComponent,
+    EntityDashboardComponent*/
   ],
   exports: [
-    EntityTemplateDirective,
+    EntityToolbarComponent
+    /*EntityTemplateDirective,
     EntityFormComponent,
     EntityFormEmbeddedComponent,
     EntityTableComponent,
@@ -126,11 +126,10 @@ import { EntityToolbarModule } from './entity-toolbar/entity-toolbar.module';
     EntityWizardComponent,
     EntityTaskComponent,
     EntityDialogComponent,
-    EntityDashboardComponent,
-    EntityToolbarModule
+    EntityDashboardComponent*/
   ],
   entryComponents: [
-    FormButtonComponent,
+    /*FormButtonComponent,
     FormInputComponent,
     FormSelectComponent,
     FormCheckboxComponent,
@@ -150,11 +149,11 @@ import { EntityToolbarModule } from './entity-toolbar/entity-toolbar.module';
     FormSliderComponent,
     FormToggleButtonComponent,
     FormTaskComponent,
-    FormParagraphComponent
+    FormParagraphComponent*/
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
-    AppLoaderService
+    //AppLoaderService
   ]
 })
-export class EntityModule {}
+export class EntityToolbarModule {}
