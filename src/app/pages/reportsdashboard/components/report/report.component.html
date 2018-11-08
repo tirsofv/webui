@@ -44,7 +44,7 @@
           <div class="legend-timestamp">
             <div *ngIf="lineChart.showLegendValues">
               <span *ngIf="lineChart.legendEvents | async as timestamp">
-                <h4>Timestamp: {{timestamp[0].x}}</h4>
+                <div>Timestamp: {{timestamp[0].x}}</div>
               </span>
             </div>
           </div>
