@@ -133,7 +133,8 @@ export class LineChartComponent implements OnInit, AfterViewInit, OnDestroy, Han
     this.legendLabels.next(legendLabels);
 
 
-    this.chart = c3.generate({
+    //this.chart = c3.generate({
+    let c3Config = {
       interaction: {
         enabled:true
       },
@@ -209,13 +210,14 @@ export class LineChartComponent implements OnInit, AfterViewInit, OnDestroy, Han
           return '<div style="display:none">' + raw[0].x + '</div>';
         }
       }
-    });
-
+    }//);
+    this.chart = c3.generate(c3Config);
+    console.log(this.chart)//.axis.y.tick.values);
   }
 
   private setupPiechart() {
 
-    const chart = c3.generate({
+    let chart = c3.generate({
       bindto: '#' + this.controlUid,
       data: {
         columns: this.series,
