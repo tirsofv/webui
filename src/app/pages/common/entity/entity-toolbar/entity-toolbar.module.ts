@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CoreComponents } from 'app/core/components/corecomponents.module';
 /*import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../appMaterial.module';
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -65,7 +66,7 @@ import { EntityDashboardComponent } from './entity-dashboard/entity-dashboard.co
     /*CommonModule, FormsModule, ReactiveFormsModule,
     MaterialModule, ColorPickerModule, NgxDatatableModule, CdkTableModule, TreeModule,
     Ng2DropdownModule, NgUploaderModule, FlexLayoutModule, TranslateModule,*/
-    CdkTableModule, OverlayModule, A11yModule
+    CdkTableModule, OverlayModule, A11yModule, CoreComponents
   ],
   declarations: [
     EntityToolbarComponent

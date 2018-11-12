@@ -9,6 +9,8 @@ import { ViewControlComponent } from 'app/core/components/viewcontrol/viewcontro
 import { ViewControllerComponent } from 'app/core/components/viewcontroller/viewcontroller.component';
 import { Display,DisplayContainer } from 'app/core/components/display/display.component';
 import { ViewButtonComponent } from './viewbutton/viewbutton.component';
+import { DesktopMenuComponent } from './desktopmenu/desktopmenu.component';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule }   from '@angular/forms';
 import { C3ChartComponent } from 'app/core/components/c3chart/c3chart.component';
@@ -61,6 +63,7 @@ import { TranslateModule } from '@ngx-translate/core';
     Display,
     DisplayContainer,
     ViewButtonComponent,
+    DesktopMenuComponent,
     C3ChartComponent,
     ViewChartComponent,
     ViewChartDonutComponent,
@@ -97,6 +100,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ViewChartPieComponent,
     ViewChartLineComponent,
     ViewControlComponent,
+    DesktopMenuComponent,
     ViewButtonComponent,
     ViewControllerComponent,
     CardComponent,
@@ -125,6 +129,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ViewChartPieComponent,
     ViewChartLineComponent,
     ViewControlComponent,
+    DesktopMenuComponent,
     ViewButtonComponent,
     ViewControllerComponent,
     CardComponent,

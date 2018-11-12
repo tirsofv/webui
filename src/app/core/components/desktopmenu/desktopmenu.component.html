@@ -1,0 +1,6 @@
+<button class="d-menu d-menu-launcher" (click)="toggleOpen()">{{label}}</button>
+<div class="d-menu-wrapper" *ngIf="open">
+  <div>
+    <button class="d-menu d-menu-launcher" (click)="sendAction()">{{label}}</button>
+  </div>
+</div>
