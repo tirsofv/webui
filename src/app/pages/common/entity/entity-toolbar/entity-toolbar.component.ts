@@ -41,7 +41,7 @@ export class EntityToolbarComponent extends ViewControllerComponent implements A
     // Desktop Style Menu Example
     let menu1 = this.create(DesktopMenuComponent);
     menu1.target = this.controlEvents;
-    menu1.label = "Desktop Menu";
+    menu1.label = "Options";
     this.addChild(menu1);
   }
 

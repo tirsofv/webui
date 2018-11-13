@@ -1,0 +1,16 @@
+button.d-menu{
+  border:none;
+  background-color:rgba(0,0,0,0)
+}
+
+.d-menu-launcher{
+  border:solid 1px var(--bg1);
+}
+
+.d-menu-wrapper{
+  position:absolute;
+  background-color:var(--bg2);
+  padding:8px;
+}
+
+.d-menu-float{}
