@@ -1,0 +1,1 @@
+export {ServiceNetDataGlobalSettingComponent} from './service-netdata-global.component';

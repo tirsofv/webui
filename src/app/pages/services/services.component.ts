@@ -48,6 +48,7 @@ export class Services implements OnInit {
     'tftp': 'TFTP',
     'ups': 'UPS',
     'webdav': 'WebDAV',
+    'netdata': 'netdata'
   }
 
   public cache = [];
@@ -185,10 +186,11 @@ export class Services implements OnInit {
       // iscsi target global config route
       const route = ['sharing', 'iscsi'];
       this.router.navigate(new Array('').concat(route));
-    } else if (service === 'netdata') {
-      // launch netdata
-      window.open("http://" + environment.remote + "/netdata/");
-    } else if (service === 'cifs') {
+    } else if(service === 'netdata'){
+      const route = ['services', 'netdata','settings'];
+      this.router.navigate(new Array('').concat(route));
+    }
+    else if (service === 'cifs') {
       this.router.navigate(new Array('').concat(['services', 'smb']));
     } else {
       // Determines the route path
