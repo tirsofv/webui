@@ -41,7 +41,9 @@
           "assets/styles/fn-styles.css",
           "assets/styles/charts.css",
           "assets/styles/egret_overrides.css",
-          "assets/styles/material-reduction.css"
+          "assets/styles/material-reduction.css",
+          "../node_modules/primeicons/primeicons.css",
+          "../node_modules/primeng/resources/primeng.min.css"
         ],
         "scripts": [
 
