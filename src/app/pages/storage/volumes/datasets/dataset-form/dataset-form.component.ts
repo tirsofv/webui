@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Validators } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
+import { FormArray, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import * as _ from 'lodash';
 import { RestService, WebSocketService } from '../../../../../services/';
@@ -122,7 +122,7 @@ export class DatasetFormComponent implements Formconfiguration{
         { label: 'off', value: 'OFF' },
         { label: 'lz4 (recommended)', value: 'LZ4' ,},
         { label: 'gzip (fastest)', value: 'GZIP-1' },
-        { label: 'gzip (default level, 6)', value: 'GZIP-6' },
+        { label: 'gzip (default level, 6)', value: 'GZIP' },
         { label: 'gzip (maximum, slow)', value: 'GZIP-9' },
         { label: 'zle (runs of zeros)', value: 'ZLE' },
         { label: 'lzjb (legacy, not recommended)', value: 'LZJB' }
