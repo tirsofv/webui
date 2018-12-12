@@ -34,4 +34,8 @@ export class SystemGeneralService {
   getSysInfo() {
     return this.ws.call('system.info', []);
   }
+
+  getNetdataList() {
+    return this.ws.call('netdata.config', []);
+  }
 }

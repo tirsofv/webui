@@ -15,6 +15,7 @@ import {RYSNCConfigurationFormComponent} from './components/service-rsync/rsyncc
 import {ServiceS3Component} from './components/service-s3/';
 import {ServiceNetdataComponent} from './components/service-netdata';
 import {ServiceNetDataGlobalSettingComponent} from './components/service-netdata/service-netdata-global-setting'
+import {ServiceNetDataAlarmComponent} from './components/service-netdata/service-netdata-alarm/service-netdata-alarm'
 import {ServiceSMARTComponent} from './components/service-smart/';
 import {ServiceSMBComponent} from './components/service-smb/';
 import {ServiceSNMPComponent} from './components/service-snmp/';
@@ -143,6 +144,11 @@ export const routes: Routes = [
         path: 'settings',
         component: ServiceNetDataGlobalSettingComponent,
         data: { title: 'Global Settings', breadcrumb: 'settings' },
+      },
+      {
+        path: 'alarm',
+        component: ServiceNetDataAlarmComponent,
+        data: { title: 'Alarm', breadcrumb: 'alarm' },
       },
     ]
   },

@@ -1,0 +1,1 @@
+export {ServiceNetDataAlarmComponent} from './service-netdata-alarm';
