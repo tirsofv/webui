@@ -236,7 +236,7 @@ export class UpdateComponent implements OnInit {
   }
 
   onTrainChanged(event){
-    const compare = this.compareTrains(this.selectedTrain, event.value);
+    const compare = this.compareTrains(this.selectedTrain, event);
     if(compare === "NIGHTLY_DOWNGRADE" || compare === "MINOR_DOWNGRADE" || compare === "MAJOR_DOWNGRADE" || compare ==="SDK") {
       this.dialogService.Info("Error", this.train_msg[compare]).subscribe((res)=>{
         this.train = this.selectedTrain;
@@ -244,7 +244,7 @@ export class UpdateComponent implements OnInit {
     } else if(compare === "NIGHTLY_UPGRADE"){
         this.dialogService.confirm(T("Warning"), this.train_msg[compare]).subscribe((res)=>{
           if (res){
-            this.train = event.value;
+            this.train = event;
             this.currentTrainDescription = this.fullTrainList[this.train].description.toLowerCase();
             this.check();
           } else {
@@ -255,7 +255,7 @@ export class UpdateComponent implements OnInit {
     } else if (compare === "ALLOWED") {
       this.dialogService.confirm(T("Switch Train"), T("Switch update trains?")).subscribe((train_res)=>{
         if(train_res){
-          this.train = event.value;
+          this.train = event;
           this.currentTrainDescription = this.fullTrainList[this.train].description.toLowerCase();
           this.check();
         }
