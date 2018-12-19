@@ -44,7 +44,8 @@ export class UpdateComponent implements OnInit {
   public pre_release_train: boolean;
   public nightly_train: boolean;
   public updates_available = false;
-  public currentTrainDescription: string;
+  public startingTrainDescription: string; // ie, the train present when the page opens
+  public currentTrainDescription: string; // ie, the last train selected
   public fullTrainList: any[];
 
   public busy: Subscription;
@@ -231,35 +232,45 @@ export class UpdateComponent implements OnInit {
       } else {
         this.currentTrainDescription = res.trains[this.selectedTrain].description.toLowerCase();
       }
+      this.startingTrainDescription = this.currentTrainDescription; // preserve the train that was current when the page opened
     });
+
   }
 
   onTrainChanged(event){
-    const compare = this.compareTrains(this.selectedTrain, event.value);
-    if(compare === "NIGHTLY_DOWNGRADE" || compare === "MINOR_DOWNGRADE" || compare === "MAJOR_DOWNGRADE" || compare ==="SDK") {
-      this.dialogService.Info("Error", this.train_msg[compare]).subscribe((res)=>{
-        this.train = this.selectedTrain;
-      })
-    } else if(compare === "NIGHTLY_UPGRADE"){
-        this.dialogService.confirm(T("Warning"), this.train_msg[compare]).subscribe((res)=>{
-          if (res){
+    // If user selects another train but then returns to the original selection before upgrading or downgrading...
+    if (event.value === this.selectedTrain) {
+      this.currentTrainDescription = this.startingTrainDescription; // return to the train that was current when the page opened
+      this.check();
+    }
+    else {
+      const compare = this.compareTrains(this.selectedTrain, event.value);
+      if(compare === "NIGHTLY_DOWNGRADE" || compare === "MINOR_DOWNGRADE" || compare === "MAJOR_DOWNGRADE" || compare ==="SDK") {
+        this.dialogService.Info("Error", this.train_msg[compare]).subscribe((res)=>{
+          this.train = this.selectedTrain;
+        })
+      } else if(compare === "NIGHTLY_UPGRADE"){
+          this.dialogService.confirm(T("Warning"), this.train_msg[compare]).subscribe((res)=>{
+            if (res){
+              this.train = event.value;
+              this.currentTrainDescription = this.fullTrainList[this.train].description.toLowerCase();
+              this.check();
+            } else {
+              this.train = this.selectedTrain;
+              this.currentTrainDescription = this.fullTrainList[this.train].description.toLowerCase();
+            }
+          })
+      } else if (compare === "ALLOWED") {
+        this.dialogService.confirm(T("Switch Train"), T("Switch update trains?")).subscribe((train_res)=>{
+          if(train_res){
             this.train = event.value;
             this.currentTrainDescription = this.fullTrainList[this.train].description.toLowerCase();
             this.check();
-          } else {
-            this.train = this.selectedTrain;
-            this.currentTrainDescription = this.fullTrainList[this.train].description.toLowerCase();
           }
         })
-    } else if (compare === "ALLOWED") {
-      this.dialogService.confirm(T("Switch Train"), T("Switch update trains?")).subscribe((train_res)=>{
-        if(train_res){
-          this.train = event.value;
-          this.currentTrainDescription = this.fullTrainList[this.train].description.toLowerCase();
-          this.check();
-        }
-      })
+      }
     }
+
   }
 
   toggleAutoCheck() {
@@ -474,6 +485,9 @@ export class UpdateComponent implements OnInit {
 
   check() {
     this.showSpinner = true;
+    this.updates_available = false; // These are to clear the html when user... 
+    this.releaseNotes = ''; // goes back to current train. These will be reset... 
+    this.changeLog = ''; // below if needed.
     this.pendingupdates();
     this.error = null;
     this.ws.call('update.check_available', [{ train: this.train }])
