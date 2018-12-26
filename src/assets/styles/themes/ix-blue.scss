@@ -1062,4 +1062,8 @@ $primary-dark: darken( map-get($md-primary, 500), 8% );
     @include variable(color, --fg2, $fg2 !important);
   }
 
+  .xtr-margin {
+    margin-right: 5px;
+  }
+
 } // end of ix theme
