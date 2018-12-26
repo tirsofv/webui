@@ -4,7 +4,7 @@
 .vdev-table {
     padding-bottom: 10px;
 	width: 390px;
-}
+} 
 
 .vdev-actions {
     display: flex;
@@ -16,6 +16,10 @@
 .vdev-action-btn {
     border: none;
     outline: none;
+}
+
+.vdev-action-btn.x-padding {
+    padding-bottom: 12px;
 }
 
 .vdev-type {
