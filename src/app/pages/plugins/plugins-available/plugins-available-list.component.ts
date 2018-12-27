@@ -29,6 +29,7 @@ export class PluginsAvailabelListComponent {
   public config: any = {
     paging: true,
     sorting: { columns: this.columns },
+    multiSelect: true,
     deleteMsg: {
       title: 'Plugin',
       key_props: ['0'],
@@ -49,6 +50,21 @@ export class PluginsAvailabelListComponent {
                               other jail data. To create a new ZFS Pool, \
                               navigate Storage/Volumes and click 'Create \
                               ZFS Pool'.");
+
+  // Adds checkbox and button for installing plugins, but it really doesn't fit the rest of the entity table setup
+  public singleActions: Array < any > = [
+    {
+      id: "install",
+      label: T("Install"),
+      icon: "edit",
+      ttpos: "above",
+      enable: true,
+      onClick: (selected) => {
+        this.router.navigate(
+          new Array('').concat(["plugins", "add", selected[0][2]]));
+      }
+    }
+  ]
 
   constructor(protected router: Router, protected rest: RestService, protected ws: WebSocketService, protected loader: AppLoaderService) {
     this.getActivatedPool();

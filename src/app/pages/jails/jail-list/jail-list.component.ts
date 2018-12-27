@@ -146,6 +146,45 @@ export class JailListComponent implements OnInit {
     },
   ];
 
+  public singleActions: Array < any > = [
+    {
+      id: "edit",
+      label: "Edit",
+      icon: "edit",
+      ttpos: "above",
+      enable: true,
+      onClick: (selected) => {
+        let selectedJails = this.getSelectedNames(selected);
+        this.router.navigate(
+          new Array('').concat(["jails", "edit", selectedJails[0][0]]));
+      }
+    },
+    {
+      id: "mmount",
+      label: "Mnt Pts",
+      icon: "save",
+      ttpos: "above",
+      enable: true,
+      onClick: (selected) => {
+        let selectedJails = this.getSelectedNames(selected);
+        this.router.navigate(
+          new Array('').concat(["jails", "storage", selectedJails[0][0]]));
+      }
+    },
+    {
+      id: "shell",
+      label: "Shell",
+      icon: "dvr",
+      ttpos: "above",
+      enable: true,
+      onClick: (selected) => {
+        let selectedJails = this.getSelectedNames(selected);
+        this.router.navigate(
+          new Array('').concat(["jails", "shell", selectedJails[0][0]]));
+      }
+    }
+  ];
+
   constructor(protected router: Router, protected rest: RestService, protected ws: WebSocketService, 
     protected loader: AppLoaderService, protected dialogService: DialogService, private translate: TranslateService,
     protected snackBar: MatSnackBar, public sorter: StorageService) {}
