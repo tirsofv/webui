@@ -36,12 +36,12 @@ export class JailListComponent implements OnInit {
   public legacyWarningLink = T("legacy web interface");
 
   public columns: Array < any > = [
-    { name: T('Jail'), prop: 'host_hostuuid', always_display: true },
-    { name: T('IPv4 Address'), prop: 'ip4_addr' },
-    { name: T('IPv6 Address'), prop: 'ip6_addr' },
-    { name: T('Status'), prop: 'state' },
-    { name: T('Type'), prop: 'type', hidden: true },
-    { name: T('Release'), prop: 'release' },
+    { name: T('Jail'), prop: 'host_hostuuid', always_display: true, flex: 1 },
+    { name: T('IPv4 Address'), prop: 'ip4_addr', flex: 1 },
+    { name: T('IPv6 Address'), prop: 'ip6_addr', flex: 1 },
+    { name: T('Status'), prop: 'state', flex: 1 },
+    { name: T('Type'), prop: 'type', hidden: true, flex: 1 },
+    { name: T('Release'), prop: 'release', flex: 2 },
   ];
   public config: any = {
     paging: true,
