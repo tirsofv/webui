@@ -18,10 +18,10 @@ export class SnapshotListComponent {
   public busy: Subscription;
   public sub: Subscription;
   public columns: Array<any> = [
-    {name : 'Name', prop : 'name'},
-    {name : 'Used', prop : 'used'},
-    {name : 'Referenced', prop : 'refer'},
-    {name : 'Date Created', prop: 'creation'}
+    {name : 'Name', prop : 'name', flex: 3},
+    {name : 'Used', prop : 'used', flex: 1},
+    {name : 'Referenced', prop : 'refer', flex: 1},
+    {name : 'Date Created', prop: 'creation', flex: 1}
   ];
   public config: any = {
     paging: true,
