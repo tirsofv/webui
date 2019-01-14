@@ -5,7 +5,7 @@
   "description": "FreeNAS Angular 4 WebUI",
   "homepage": "https://github.com/freenas/webui/",
   "scripts": {
-    "ie-support": "webpack-cli src/ie-polyfills.js -o src/assets/scripts/ie-support/ie-polyfills.min.js -c webpack-polyfill.config.js",
+    "ie-support": "npx webpack-cli src/ie-polyfills.js -o src/assets/scripts/ie-support/ie-polyfills.min.js -c webpack-polyfill.config.js",
     "ng": "ng",
     "rimraf": "rimraf",
     "changelog": "standard-changelog",
@@ -100,7 +100,8 @@
     "raven-js": "3.22.1",
     "rxjs": "5.5.6",
     "stylefire": "2.0.7",
-    "webpack-cli": "^3.2.1",
+    "webpack": "4.28.4",
+    "webpack-cli": "3.2.1",
     "xterm": "2.9.2",
     "zone.js": "0.8.20"
   },
