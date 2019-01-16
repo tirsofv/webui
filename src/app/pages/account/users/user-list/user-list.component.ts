@@ -31,7 +31,7 @@ export class UserListComponent implements OnInit {
     { name: 'Home directory', prop: 'bsdusr_home', hidden: true },
     { name: 'Shell', prop: 'bsdusr_shell', hidden: false, minWidth: 150 },
     { name: 'Builtin', prop: 'bsdusr_builtin', hidden: true  },
-    { name: 'Full Name', prop: 'bsdusr_full_name', hidden: false, minWidth: 300 },
+    { name: 'Full Name', prop: 'bsdusr_full_name', hidden: false, minWidth: 250, maxWidth: 400 },
     { name: 'Email', prop: 'bsdusr_email', hidden: true },
     { name: 'Disable Password Login', prop: 'bsdusr_password_disabled', hidden: true },
     { name: 'Lock User', prop: 'bsdusr_locked', hidden: false, },

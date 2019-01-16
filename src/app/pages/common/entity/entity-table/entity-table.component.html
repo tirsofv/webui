@@ -207,7 +207,8 @@
           *ngFor="let col of alwaysDisplayedCols"
           prop="{{col.prop}}"
           name="{{col.name | translate}}"
-          [minWidth]="col.minWidth">
+          [minWidth]="col.minWidth"
+          [maxWidth]="col.maxWidth">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div id="{{col.prop}}_{{row[col.prop]}}" 
                  title="{{convertDisplayValue(row[col.prop])}}">
@@ -220,7 +221,8 @@
                *ngFor="let col of conf.columns"
                prop="{{col.prop}}"
                name="{{col.name | translate}}"
-               [minWidth]="col.minWidth">
+               [minWidth]="col.minWidth"
+               [maxWidth]="col.maxWidth">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div id="{{col.prop}}_{{row[col.prop]}}" 
                title="{{convertDisplayValue(row[col.prop])}}" [ngClass]="col.icon ? 'IconCell' : ''">
