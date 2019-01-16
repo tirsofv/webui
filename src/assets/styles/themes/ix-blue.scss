@@ -35,6 +35,9 @@ $primary-dark: darken( map-get($md-primary, 500), 8% );
   }
 }
 
+// .sidebar-panel.mat-sidenav .sidebar-list-item.open > .mat-list-item-content {
+//   position: absolute;
+// }
 // include the custom theme object into the angular material theme
 .ix-blue {
   @include angular-material-theme($freenas-theme);
@@ -1044,6 +1047,10 @@ $primary-dark: darken( map-get($md-primary, 500), 8% );
     white-space: normal !important;
     text-overflow: unset;
     min-width: 200px;
+  }
+
+  jail-wizard .mat-horizontal-content-container {
+    padding-top: 10px;
   }
 
  } // end of ix theme
