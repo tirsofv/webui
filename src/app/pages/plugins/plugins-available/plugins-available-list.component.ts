@@ -21,10 +21,10 @@ export class PluginsAvailabelListComponent {
   public toActivatePool: boolean = false;
 
   public columns: Array < any > = [
-    { name: T('Name'), prop: '0', icon: '5', flex: 1.5 },
-    { name: T('Description'), prop: '1', flex: 4 }, 
-    { name: T('Version'), prop: '6', flex: 1 },
-    { name: T('Official'), prop: '4', flex: 0},
+    { name: T('Name'), prop: '0', icon: '5' },
+    { name: T('Description'), prop: '1', minWidth: 300 }, 
+    { name: T('Version'), prop: '6' },
+    { name: T('Official'), prop: '4' },
   ];
   public config: any = {
     paging: true,

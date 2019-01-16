@@ -137,8 +137,8 @@
     <ngx-datatable *ngIf="showDefaults" class='material' 
       [rows]='currentRows' 
       [columns]="conf.columns" 
-      [columnMode]="'flex'" 
-      [columnWidth]="'auto'"
+      [columnMode]="'force'" 
+
       [headerHeight]="'50'" 
       [footerHeight]="'50'" 
       [rowHeight]="50" 
@@ -189,7 +189,7 @@
           </ng-template>
         </ngx-datatable-footer>
 
-      <ngx-datatable-column *ngIf="conf.config && conf.config.multiSelect" [flexGrow]="1" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+      <ngx-datatable-column *ngIf="conf.config && conf.config.multiSelect" [width]="85" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
         <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
           <div class="headerCheckBox">
             <mat-checkbox [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)"></mat-checkbox>
@@ -207,7 +207,7 @@
           *ngFor="let col of alwaysDisplayedCols"
           prop="{{col.prop}}"
           name="{{col.name | translate}}"
-          [flexGrow]="col.flex">
+          [minWidth]="col.minWidth">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div id="{{col.prop}}_{{row[col.prop]}}" 
                  title="{{convertDisplayValue(row[col.prop])}}">
@@ -220,8 +220,7 @@
                *ngFor="let col of conf.columns"
                prop="{{col.prop}}"
                name="{{col.name | translate}}"
-               [minWidth]='100'
-               [flexGrow]="col.flex">
+               [minWidth]="col.minWidth">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div id="{{col.prop}}_{{row[col.prop]}}" 
                title="{{convertDisplayValue(row[col.prop])}}" [ngClass]="col.icon ? 'IconCell' : ''">
@@ -236,8 +235,7 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column
-      [flexGrow]="1">
+      <ngx-datatable-column>
         <ng-template let-row="row" ngx-datatable-cell-template>
           <app-entity-table-actions *ngIf="showActions" [entity]="this" [row]="row">
           </app-entity-table-actions>

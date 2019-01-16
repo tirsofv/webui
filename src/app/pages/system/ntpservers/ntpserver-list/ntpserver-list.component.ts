@@ -15,12 +15,12 @@ export class NTPServerListComponent {
   protected route_success: string[] = [ 'system', 'ntpservers' ];
   
   public columns: Array<any> = [
-    {name : 'Address', prop : 'ntp_address', always_display: true, flex: 1},
-    {name : 'Burst', prop : 'ntp_burst', flex: 0},
-    {name : 'IBurst', prop : 'ntp_iburst', flex: 0},
-    {name : 'Prefer', prop : 'ntp_prefer', flex: 0},
-    {name : 'Min. Poll', prop : 'ntp_minpoll', flex: 0},
-    {name : 'Max. Poll', prop : 'ntp_maxpoll', flex: 0},
+    {name : 'Address', prop : 'ntp_address', always_display: true, minWidth: 200},
+    {name : 'Burst', prop : 'ntp_burst'},
+    {name : 'IBurst', prop : 'ntp_iburst'},
+    {name : 'Prefer', prop : 'ntp_prefer'},
+    {name : 'Min. Poll', prop : 'ntp_minpoll'},
+    {name : 'Max. Poll', prop : 'ntp_maxpoll'},
   ];
   public config: any = {
     paging : true,

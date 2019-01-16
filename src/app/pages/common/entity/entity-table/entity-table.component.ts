@@ -152,7 +152,7 @@ export class EntityTableComponent /*extends ViewControllerComponent*/ implements
       if (this.conf.afterInit) {
         this.conf.afterInit(this);
       }
-    })
+    }, 25)
   
     this.conf.columns.forEach((column) => {
       this.displayedColumns.push(column.prop);

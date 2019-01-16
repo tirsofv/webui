@@ -19,10 +19,10 @@ export class GroupListComponent {
   protected entityList: any;
   protected loaderOpen = false;
   public columns: Array<any> = [
-    {name : 'Group', prop : 'bsdgrp_group', always_display: true, flex: 1},
-    {name : 'GID', prop : 'bsdgrp_gid', flex: 1},
-    {name : 'Builtin', prop : 'bsdgrp_builtin', flex: 1},
-    {name : 'Permit Sudo', prop : 'bsdgrp_sudo', flex: 1},
+    {name : 'Group', prop : 'bsdgrp_group', always_display: true},
+    {name : 'GID', prop : 'bsdgrp_gid'},
+    {name : 'Builtin', prop : 'bsdgrp_builtin'},
+    {name : 'Permit Sudo', prop : 'bsdgrp_sudo'},
   ];
   public config: any = {
     paging : true,

@@ -25,18 +25,18 @@ export class UserListComponent implements OnInit {
   protected grp_lst = [] 
 
   public columns: Array < any > = [
-    { name: 'Username', prop: 'bsdusr_username', always_display: true, flex: 1 },
-    { name: 'UID', prop: 'bsdusr_uid', hidden: true, flex: 1},
-    { name: 'GID', prop: 'bsdusr_gid', hidden: true, flex: 1 },
-    { name: 'Home directory', prop: 'bsdusr_home', flex: 1, hidden: true },
-    { name: 'Shell', prop: 'bsdusr_shell', hidden: false, flex: 1 },
-    { name: 'Builtin', prop: 'bsdusr_builtin', hidden: true, flex: 1 },
-    { name: 'Full Name', prop: 'bsdusr_full_name', hidden: false, flex: 2 },
-    { name: 'Email', prop: 'bsdusr_email', hidden: true, flex: 1 },
-    { name: 'Disable Password Login', prop: 'bsdusr_password_disabled', hidden: true, flex: 1 },
-    { name: 'Lock User', prop: 'bsdusr_locked', hidden: false, flex: 1 },
-    { name: 'Permit Sudo', prop: 'bsdusr_sudo', hidden: true, flex: 1 },
-    { name: 'Microsoft Account', prop: 'bsdusr_microsoft_account', hidden: true, flex: 1 },
+    { name: 'Username', prop: 'bsdusr_username', always_display: true, minWidth: 150 },
+    { name: 'UID', prop: 'bsdusr_uid', hidden: true },
+    { name: 'GID', prop: 'bsdusr_gid', hidden: true },
+    { name: 'Home directory', prop: 'bsdusr_home', hidden: true },
+    { name: 'Shell', prop: 'bsdusr_shell', hidden: false, minWidth: 150 },
+    { name: 'Builtin', prop: 'bsdusr_builtin', hidden: true  },
+    { name: 'Full Name', prop: 'bsdusr_full_name', hidden: false, minWidth: 300 },
+    { name: 'Email', prop: 'bsdusr_email', hidden: true },
+    { name: 'Disable Password Login', prop: 'bsdusr_password_disabled', hidden: true },
+    { name: 'Lock User', prop: 'bsdusr_locked', hidden: false, },
+    { name: 'Permit Sudo', prop: 'bsdusr_sudo', hidden: true },
+    { name: 'Microsoft Account', prop: 'bsdusr_microsoft_account', hidden: true },
   ];
   public config: any = {
     paging: true,
