@@ -28,6 +28,9 @@ export const helptext_sharing_smb = {
  and select the </i>Path</i> that contains the new\
  lower case username.'),
 
+   placeholder_timemachine: T('Time Machine'),
+   tooltip_timemachine: T('Enable Time Machine backups on this share.'),
+
     placeholder_default_permissions: T('Default Permissions'),
     tooltip_default_permissions: T('When enabled, the ACLs grant read and write access for\
  owner or group and read-only for others.\
@@ -73,10 +76,7 @@ export const helptext_sharing_smb = {
 
     placeholder_hostsdeny: T('Hosts Deny'),
     tooltip_hostsdeny: T('Enter a list of denied hostnames or IP addresses.\
- Separate entries with a comma, space, or tab.\
- Specify <i>ALL</i> and list any hosts from\
- <b>Hosts Allow</b> to have those hosts take\
- precedence.'),
+ Separate entries with a comma, space, or tab.'),
 
     placeholder_vfsobjects: T('VFS Objects'),
     tooltip_vfsobjects: T('Adds <a\
