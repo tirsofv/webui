@@ -363,17 +363,7 @@ export class EntityTableComponent /*extends ViewControllerComponent*/ implements
     this.paginationPageIndex  = 0;
     this.setPaginationInfo();
     this.showDefaults = true;
-
-    // Here's a hack temporarily adjust the page and fix the ngx layout - works maybe 80% of time
-    // setTimeout(() => {
-    //   document.body.style.width = window.innerWidth -1 + 'px';
-    //   setTimeout(() => {
-    //     document.body.style.width = 'auto';
-    //   }, 100)
-    // }, 20);
-    // end of hack
-
-        return res;
+    return res;
 
   }
 
