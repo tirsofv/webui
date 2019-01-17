@@ -138,7 +138,7 @@
       [rows]='currentRows' 
       [columns]="conf.columns" 
       [columnMode]="'force'" 
-
+      [columnWidth]="'auto'"
       [headerHeight]="'50'" 
       [footerHeight]="'50'" 
       [rowHeight]="50" 
@@ -154,7 +154,7 @@
       [selected]='selected'
       (select)='onSelect($event)'
       [style.height.px]="tableHeight"
-      [scrollbarH]='false'
+      [scrollbarH]='true'
       [scrollbarV]='true'
       #entityTable>
       

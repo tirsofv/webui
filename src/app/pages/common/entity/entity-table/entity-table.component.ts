@@ -152,7 +152,7 @@ export class EntityTableComponent /*extends ViewControllerComponent*/ implements
       if (this.conf.afterInit) {
         this.conf.afterInit(this);
       }
-    }, 25)
+    })
   
     this.conf.columns.forEach((column) => {
       this.displayedColumns.push(column.prop);
@@ -365,12 +365,12 @@ export class EntityTableComponent /*extends ViewControllerComponent*/ implements
     this.showDefaults = true;
 
     // Here's a hack temporarily adjust the page and fix the ngx layout - works maybe 80% of time
-    setTimeout(() => {
-      document.body.style.width = window.innerWidth -1 + 'px';
-      setTimeout(() => {
-        document.body.style.width = 'auto';
-      }, 100)
-    }, 20);
+    // setTimeout(() => {
+    //   document.body.style.width = window.innerWidth -1 + 'px';
+    //   setTimeout(() => {
+    //     document.body.style.width = 'auto';
+    //   }, 100)
+    // }, 20);
     // end of hack
 
         return res;
