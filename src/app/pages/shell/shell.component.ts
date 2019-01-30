@@ -39,8 +39,12 @@ export class ShellComponent implements OnInit, OnDestroy {
         this.ws.call('auth.generate_token').subscribe((token) => {
             this.ss.token = token;
             this.ss.connect();
-
-            this.initializeTerminal();
+            this.ss.shellConnected.subscribe(
+                (res) => {
+                    this.initializeTerminal();
+                    this.ss.shellConnected.unsubscribe();
+                }
+            )
         });
     }
 
