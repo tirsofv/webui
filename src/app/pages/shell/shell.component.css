@@ -11,3 +11,7 @@
 mat-card {
   min-width: 700px;
 }
+
+div.test {
+  width: 700px;
+}

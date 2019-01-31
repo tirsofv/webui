@@ -89,6 +89,7 @@ export class ShellService {
       return;
     }
     if (data.msg === "ping") {} else {
+      console.log(msg);
       this.shellCmdOutput = msg.data;
       this.shellOutput.emit(this.shellCmdOutput);
     }

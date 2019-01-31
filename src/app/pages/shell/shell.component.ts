@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, OnChanges, Input, SimpleChange } from '@angular/core';
 import { WebSocketService, ShellService } from '../../services/';
 import { Terminal } from 'xterm';
 import * as fit from 'xterm/lib/addons/fit/fit';
@@ -6,6 +6,7 @@ import * as attach from 'xterm/lib/addons/attach/attach';
 
 import { T } from '../../translate-marker';
 import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
 
 @Component({
 selector: 'app-shell',
@@ -14,7 +15,7 @@ styleUrls: ['./shell.component.css'],
 providers: [ShellService],
 })
 
-export class ShellComponent implements OnInit, OnDestroy {
+export class ShellComponent implements OnInit, OnDestroy, OnChanges{
     @ViewChild('terminal') container: ElementRef;
     public term: Terminal;
     public shellConnected = false;
@@ -31,6 +32,8 @@ export class ShellComponent implements OnInit, OnDestroy {
  chapter in the guide for usage information\
  and examples.');
 
+    @Input() prompt = '';
+    clearLine = "\u001b[2K\r"
     constructor(private ws: WebSocketService, private ss: ShellService){
         Terminal.applyAddon(attach);
     }
@@ -47,11 +50,66 @@ export class ShellComponent implements OnInit, OnDestroy {
             )
         });
     }
+    ngOnChanges() {
+          console.log('hello');
+    }
 
+    getFun() {
+        console.log((<any>this.term)._core.wraparoundMode);
+        
+        console.log((<any>this.term)._core.viewport.scrollBarWidth); // 15
+        
+        const cellWidth = (<any>this.term)._core.renderer.dimensions.actualCellWidth; // 8.9
+        const cellHeight = (<any>this.term)._core.renderer.dimensions.actualCellHeight; //17.775
+
+        console.log(cellWidth, cellHeight);
+        
+        const availableWidth = this.container.nativeElement.clientWidth;
+        const availableHeight = this.container.nativeElement.clientHeight;
+
+        console.log(availableWidth, availableHeight); //685 711
+
+        console.log(availableWidth / cellWidth); // 76.966
+        
+        let col = Math.floor(availableWidth / cellWidth);
+        let row = Math.floor(availableHeight / cellHeight);
+        console.log(row, col); //40 76
+        
+        (<any>this.term)._core.renderer.clear();
+        this.term.resize(col, row);
+        (<any>this.term)._core.renderer.clear();
+        console.log(this.term);
+        
+    }
     initializeTerminal() {
-        this.term = new Terminal();
+        this.term = new Terminal({
+            cols: 20,
+            rows:40,
+        });
         (this.term as any).open(this.container.nativeElement, true);
-        (this.term as any).attach(this.ss.socket, true, true);
+        this.ss.shellOutput.subscribe((value) => {
+            if (value !== undefined) {
+              this.term.write(value);
+            }
+          });
+
+        // (this.term as any).attach(this.ss.socket, true, true);
+        console.log(this.container.nativeElement.clientWidth, this.container.nativeElement.clientHeight);
+        console.log(this.term);
+        this.getFun();
+        this.term.on('key', (key, ev) => {
+            console.log(key.charCodeAt(0));
+            if (key.charCodeAt(0) == 13) {
+                this.term.write('\n');
+            }
+            // this.term.write(key);
+        });
+    this.term.on('data', (data) => {
+        console.log(data);
+        
+        this.ss.send(data);
+    });
+        
     }
 
     ngOnDestroy() {
@@ -61,7 +119,8 @@ export class ShellComponent implements OnInit, OnDestroy {
     }
 
     onResize(event){
-
+        console.log(this.term);
+        
     }
 
     reconnect() {
