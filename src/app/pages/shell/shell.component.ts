@@ -7,6 +7,7 @@ import * as attach from 'xterm/lib/addons/attach/attach';
 import { T } from '../../translate-marker';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
+import * as _ from 'lodash';
 
 @Component({
 selector: 'app-shell',
@@ -33,7 +34,10 @@ export class ShellComponent implements OnInit, OnDestroy, OnChanges{
  and examples.');
 
     @Input() prompt = '';
-    clearLine = "\u001b[2K\r"
+    clearLine = "\u001b[2K\r";
+    protected command = '';
+    protected pre_command = '';
+
     constructor(private ws: WebSocketService, private ss: ShellService){
         Terminal.applyAddon(attach);
     }
@@ -56,7 +60,7 @@ export class ShellComponent implements OnInit, OnDestroy, OnChanges{
 
     getFun() {
         console.log((<any>this.term)._core.wraparoundMode);
-        
+
         console.log((<any>this.term)._core.viewport.scrollBarWidth); // 15
         
         const cellWidth = (<any>this.term)._core.renderer.dimensions.actualCellWidth; // 8.9
@@ -71,7 +75,7 @@ export class ShellComponent implements OnInit, OnDestroy, OnChanges{
 
         console.log(availableWidth / cellWidth); // 76.966
         
-        let col = Math.floor(availableWidth / cellWidth);
+        let col = Math.floor(availableWidth / cellWidth) - 2;
         let row = Math.floor(availableHeight / cellHeight);
         console.log(row, col); //40 76
         
@@ -81,15 +85,34 @@ export class ShellComponent implements OnInit, OnDestroy, OnChanges{
         console.log(this.term);
         
     }
+    handler(value) {
+        return value == _.trim(value);
+    }
     initializeTerminal() {
         this.term = new Terminal({
             cols: 20,
-            rows:40,
+            rows: 40,
         });
         (this.term as any).open(this.container.nativeElement, true);
         this.ss.shellOutput.subscribe((value) => {
+            
+            // console.log('ss value:',value, 'preCommd', this.pre_command);
+            const flag = this.handler(value);
+            // console.log(flag);
+            
             if (value !== undefined) {
-              this.term.write(value);
+                if (flag) {
+                    this.term.write(value);
+                    
+                } else {
+                    console.log(this.pre_command == _.trim(value));
+                    if (this.pre_command == _.trim(value)) {
+                        this.term.write(_.trim(value));
+                    } else {
+                        this.term.write(value);
+                    }
+                }
+                
             }
           });
 
@@ -97,19 +120,46 @@ export class ShellComponent implements OnInit, OnDestroy, OnChanges{
         console.log(this.container.nativeElement.clientWidth, this.container.nativeElement.clientHeight);
         console.log(this.term);
         this.getFun();
+        
         this.term.on('key', (key, ev) => {
-            console.log(key.charCodeAt(0));
+            // console.log(key.charCodeAt(0));
             if (key.charCodeAt(0) == 13) {
-                this.term.write('\n');
+                // this.term.write('\n');
+                // console.log(this.command);
+                
+                // this.ss.send(this.command);
+                // this.command = '';
             }
             // this.term.write(key);
         });
-    this.term.on('data', (data) => {
-        console.log(data);
+
+    // this.term.on('data', (data) => {
+    //     this.term.write(data);
+    //     this.command += data;
+    //     console.log('data', data, this.command);
+    //     if (data.charCodeAt(0) == 13) {
+    //         // this.term.write('\n');
+    //         console.log(this.command);
+    //         this.pre_command = this.command + '\n';
+    //         this.ss.send(this.command);
+    //         this.command = '';
+    //     }
+    //     // this.ss.send(data);
+    // });
         
+    this.term.on('data', (data) => {
+        // this.term.write(data);
+        // this.command += data;
+        // console.log('data', data, this.command);
+        if (data.charCodeAt(0) != 13) {
+            // this.term.write('\n');
+            // console.log(this.command);
+            this.pre_command = data;
+            // this.ss.send(this.command);
+            // this.command = '';
+        }
         this.ss.send(data);
     });
-        
     }
 
     ngOnDestroy() {
