@@ -14,6 +14,7 @@ import { AppLoaderService } from '../../../../services/app-loader/app-loader.ser
 import { MatDialog } from '@angular/material';
 import { T } from '../../../../translate-marker';
 import helptext from '../../../../helptext/storage/volumes/volume-import-wizard';
+import { DialogFormConfiguration } from '../../../common/entity/entity-dialog/dialog-form-configuration.interface';
 
 @Component({
   selector: 'app-volumeimport-wizard',
@@ -165,6 +166,7 @@ export class VolumeImportWizardComponent {
   protected guid;
   protected guid_subscription;
   protected message_subscription;
+  protected devices_subscription;
 
   constructor(protected rest: RestService, protected ws: WebSocketService,
     private router: Router, protected loader: AppLoaderService,
@@ -249,12 +251,20 @@ export class VolumeImportWizardComponent {
       this.key.isHidden = !res;
       this.passphrase.isHidden = !res;
     });
+    this.devices_subscription = this.devices_fg.valueChanges.subscribe((res) => {
+      if (res) {
+        // this.dialogService.confirm("Encryption Key", "Please choose the encrypted key to unlock this disk.")
+        this.loadEncryptionKey();
+      }
+    })
 
     this.ws.call('disk.get_encrypted', [{"unused": true}]).subscribe((res)=>{
       for (let i = 0; i < res.length; i++) {
         this.devices.options.push({label:res[i].name, value:res[i].dev});
       }
     });
+
+
 
     this.guid = _.find(this.wizardConfig[2].fieldConfig, {'name': 'guid'});
     this.getImportableDisks();
@@ -268,6 +278,18 @@ export class VolumeImportWizardComponent {
     this.message_subscription = this.messageService.messageSourceHasNewMessage$.subscribe((message)=>{
       this.key_fg.setValue(message);
     });
+  }
+
+  loadEncryptionKey() {
+      const conf: DialogFormConfiguration = {
+        title: "Encryption Key",
+        fieldConfig: [{
+          type : 'input',
+          inputType: 'file',
+          name : 'Key',
+        }]
+      }
+      this.dialogService.dialogForm(conf);
   }
 
   customSubmit(value) {
