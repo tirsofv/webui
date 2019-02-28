@@ -140,10 +140,18 @@ export class VolumeStatusComponent implements OnInit {
     const actions = [{
       label: "Edit",
       onClick: (row) => {
-        const diskName = _.split(row.name, 'p')[0];
+        let queryKey = 'name';
+        let diskName = row.name;
+        if (_.startsWith(row.name, 'multipath/')) {
+          diskName = row.name.substring(10);
+          queryKey = 'multipath_name';
+        }
+        if (!_.startsWith(diskName, '/')) {
+          diskName = _.split(diskName, 'p')[0];
+        }
         this.ws.call('disk.query', [
           [
-            ["name", "=", diskName]
+            [queryKey, "=", diskName]
           ]
         ]).subscribe((res) => {
           this.editDiskRoute.push(this.pk, "edit", res[0].identifier);
