@@ -220,11 +220,12 @@ export class ManagerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.nameFilter = new RegExp('');
     this.capacityFilter = new RegExp('');
-    this.ws.call("notifier.get_disks", [true]).subscribe((res) => {
+    this.ws.call("disk.get_unused").subscribe((res) => {
       this.disks = [];
       for (let i in res) {
-        res[i]['real_capacity'] = res[i]['capacity'];
-        res[i]['capacity'] = (<any>window).filesize(res[i]['capacity'], {standard : "iec"});
+        console.log(res[i]);
+        res[i]['real_capacity'] = res[i]['size'];
+        res[i]['capacity'] = (<any>window).filesize(res[i]['size'], {standard : "iec"});
         this.disks.push(res[i]);
       }
 
