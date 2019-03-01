@@ -164,9 +164,10 @@ export class VolumeStatusComponent implements OnInit {
       onClick: (row) => {
         let name = row.name;
         // if use path as name, show the full path
-        if (!_.startsWith(name, '/')) {
+        if (!_.startsWith(name, '/') && !_.startsWith(name, 'multipath/')) {
           name = _.split(row.name, 'p')[0];
         }
+
         this.dialogService.confirm(
           "Offline",
           "Offline disk " + name + "?", false, T('Offline')
@@ -193,9 +194,14 @@ export class VolumeStatusComponent implements OnInit {
     }, {
       label: "Online",
       onClick: (row) => {
+        let name = row.name;
+        if (!_.startsWith(name, '/') && !_.startsWith(name, 'multipath/')) {
+          name = _.split(row.name, 'p')[0];
+        }
+
         this.dialogService.confirm(
           "Online",
-          "Online disk " + _.split(row.name, 'p')[0] + "?", false, T('Online')
+          "Online disk " + name + "?", false, T('Online')
         ).subscribe((res) => {
           if (res) {
             this.loader.open();
