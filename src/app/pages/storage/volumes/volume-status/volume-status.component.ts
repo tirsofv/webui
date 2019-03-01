@@ -128,10 +128,11 @@ export class VolumeStatusComponent implements OnInit {
     this.ws.call('disk.get_unused').subscribe((res) => {
       for (let i in res) {
         this.availableDisks.push({
-          label: res[i].name,
-          value: res[i].name,
+          label: res[i].devname,
+          value: res[i].devname,
         })
       }
+      this.availableDisks.sort((a, b) => a.label.localeCompare(b.label, undefined, {numeric: true}));
       _.find(this.replaceDiskFormFields, { name: 'replace_disk' }).options = this.availableDisks;
     })
   }
