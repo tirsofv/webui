@@ -33,6 +33,14 @@
 
 
 /*---- Globals -----*/
+@font-face {
+   font-family: 'SpaceMono';
+   src: url('/assets/iconfont/SpaceMono-Regular.ttf');
+}
+@font-face {
+   font-family: 'Roboto';
+   src: url('/assets/iconfont/RobotoSlab-Regular.ttf');
+}
 html {
     font-size: 16px;
 }
