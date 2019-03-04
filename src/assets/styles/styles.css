@@ -39,7 +39,8 @@
 }
 @font-face {
    font-family: 'Roboto';
-   src: url('/assets/iconfont/Roboto-Regular.ttf');
+   src: local('Roboto-Regular'),
+        url('/assets/iconfont/Roboto-Regular.ttf') format('truetype');
 }
 html {
     font-size: 16px;
