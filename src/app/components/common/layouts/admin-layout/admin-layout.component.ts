@@ -10,6 +10,7 @@ import * as Ps from 'perfect-scrollbar';
 import * as domHelper from '../../../../helpers/dom.helper';
 import { ThemeService } from '../../../../services/theme/theme.service';
 import { LanguageService } from '../../../../services/language.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { ConsolePanelModalDialog } from '../../dialog/consolepanel/consolepanel-dialog.component';
 import {UUID} from 'angular2-uuid';
 
@@ -43,6 +44,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewChecked {
     protected rest: RestService,
     protected ws: WebSocketService,
     public language: LanguageService,
+    public navService: NavigationService,
     public dialog: MatDialog) {
     // detect server type
     ws.call('system.is_freenas').subscribe((res)=>{
@@ -74,6 +76,8 @@ export class AdminLayoutComponent implements OnInit, AfterViewChecked {
       this.logoPath = theme.logoPath;
       this.logoTextPath = theme.logoTextPath;
     });
+
+    this.navService.sidenavExpanded.subscribe(() => this.updateScroll());
   }
 
   ngOnInit() {
@@ -202,5 +206,13 @@ export class AdminLayoutComponent implements OnInit, AfterViewChecked {
         this.sideNave.close();
       }
     }
+  }
+
+  // Refresh scrollbar on sidenav to keep scrollbar displaying
+  updateScroll() {
+    let navigationHold = document.getElementById('scroll-area');
+    setTimeout(() => {
+      Ps.update(navigationHold);
+    }, 500);
   }
 }

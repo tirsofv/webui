@@ -3,8 +3,7 @@ import { NavigationService } from "../../../services/navigation/navigation.servi
 import { WebSocketService } from "../../../services/";
 import { DocsService } from "../../../services/docs.service";
 import {Router} from "@angular/router";
-import * as _ from 'lodash';
-import * as Ps from 'perfect-scrollbar';
+import * as _ from 'lodash';;
 
 @Component({
   selector: 'navigation',
@@ -48,13 +47,5 @@ export class NavigationComponent implements OnInit {
         }
       });
     });
-  }
-
-  // Workaround to keep scrollbar displaying as needed
-  updateScroll() {
-    let navigationHold = document.getElementById('scroll-area');
-    setTimeout(() => {
-      Ps.update(navigationHold);
-    }, 500);
   }
 }

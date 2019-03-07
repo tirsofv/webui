@@ -15,6 +15,7 @@ import { MatSnackBar, MatDialog, MatDialogRef } from '@angular/material';
 import * as hopscotch from 'hopscotch';
 import { RestService } from "../../../services/rest.service";
 import { LanguageService } from "../../../services/language.service"
+import { NavigationService } from '../../../services/navigation/navigation.service';
 import { TranslateService } from '@ngx-translate/core';
 import { EntityUtils } from '../../../pages/common/entity/utils';
 import { T } from '../../../translate-marker';
@@ -55,6 +56,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
     private ws: WebSocketService,
     private rest: RestService,
     public language: LanguageService,
+    public navService: NavigationService,
     private dialogService: DialogService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
@@ -142,6 +144,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
     // Fix for sidebar
     if(!domHelper.hasClass(appBody, 'collapsed-menu')) {
       (<HTMLElement>document.querySelector('mat-sidenav-content')).style.marginLeft = '240px';
+      this.navService.sidenavExpanded.emit();
     }
   }
 
