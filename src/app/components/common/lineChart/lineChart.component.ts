@@ -56,6 +56,7 @@ export class LineChartComponent extends ViewComponent implements OnInit, AfterVi
   public conf:any;
   public columns:any;
   public linechartData:any;
+  protected ready: boolean = false;
 
   public units: string = '';
   public showLegendValues: boolean = false;
@@ -78,19 +79,22 @@ export class LineChartComponent extends ViewComponent implements OnInit, AfterVi
     this.legendEvents = new BehaviorSubject(false);
     this.legendLabels = new BehaviorSubject([]);
     this.legendAnalytics = new BehaviorSubject([]);
+    this.legendAnalytics.next("Loading..."); // <-- avoid errors in legend
   } 
 
   applyHandledData(columns, linechartData, legendLabels){
     this.columns = columns;
     this.linechartData = linechartData;
     this.legendLabels.next(legendLabels);
-
-    this.render();
+    
+    //this.render();
+    this.core.emit({name:"LineChartReadyToRender", data: {title: this.title, id: this.controlUid}})
   }
 
   public render(conf?:any){
     if(!conf){
       conf = this.makeConfig();
+      //this.legendAnalytics.next("Loading...");
     }
     
     let colors = this.colorsFromTheme();
@@ -98,7 +102,10 @@ export class LineChartComponent extends ViewComponent implements OnInit, AfterVi
       pattern: colors
     }
     conf.color = color;
+
+    
     this.chart = c3.generate(conf);
+    this.chart.load({columns: this.columns, done: () => {this.core.emit({name:"LineChartRenderComplete", data: {title: this.title, id: this.controlUid}, sender:this})} });
   }
 
     //this.chart = c3.generate({
@@ -112,7 +119,7 @@ export class LineChartComponent extends ViewComponent implements OnInit, AfterVi
        pattern: this.colorPattern
       },*/
       data: {
-        columns: this.columns,
+        columns: [],//this.columns,
         //colors: this.createColorObject(),
         x: 'xValues',
         //xFormat: '%H:%M',
@@ -222,20 +229,34 @@ export class LineChartComponent extends ViewComponent implements OnInit, AfterVi
     this.core.register({ observerClass:this, eventName:"LineChartData:" + this.title }).subscribe((evt:CoreEvent)=>{ 
       this.data = evt.data.dataObj;
       this.applyHandledData(evt.data.columns, evt.data.linechartData, evt.data.legendLabels);
-      this.legendAnalytics.next(evt.data.legendAnalytics)
+      this.legendAnalytics.next(evt.data.legendAnalytics);
+
+    });
+
+    this.core.register({ observerClass:this, eventName:"LineChartStartRender:" + this.title }).subscribe((evt:CoreEvent)=>{ 
+      //this.data = evt.data.dataObj;
+      //this.applyHandledData(evt.data.columns, evt.data.linechartData, evt.data.legendLabels);
+
+      //this.legendAnalytics.next(evt.data.legendAnalytics); // <-- uncomment this
+      //console.log("Starting to render chart " + this.title);
+      //console.log(evt.sender);
+      this.render();
+
     });
 
     this.core.register({ observerClass:this, eventName:"ThemeData" }).subscribe((evt:CoreEvent)=>{ 
       this.colorPattern = this.processThemeColors(evt.data);
       
-      if(this.linechartData){ 
+      if(this.linechartData && this.ready){ 
+        console.log( "Event " + evt.name + " triggered render of chart "+ this.title);
         this.render();
       }
     });
 
     this.core.register({ observerClass:this, eventName:"ThemeChanged" }).subscribe((evt:CoreEvent)=>{ 
       this.colorPattern = this.processThemeColors(evt.data);
-      if(this.linechartData){ 
+      if(this.linechartData && this.ready){ 
+        console.log( "Event " + evt.name + " triggered render of chart "+ this.title);
         this.render();
       }
     });

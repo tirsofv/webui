@@ -79,7 +79,11 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy, HandleChart
   public activeTab: string;
   public filteredData: ChartConfigData[] = [];
   public filteredPaginatedData: ChartConfigData[] = [];
-  public chartLayout = 'Grid'; // Defaults to grid layout
+  public chartLayout = 'Column'; // Defaults to grid layout
+  private renderDelay: number = 4000;
+  private renderOrder: string[] = [];
+  private renderQueue: string[] = []; // Charts that are ready to render
+  private nextRender: number = 0; // ChartConfigData index of next chart to be rendered
   //@ViewChild('chartWidth') chartWidth: MatButtonToggleGroup; 
   @ViewChild('pager') pagerElement;
   
@@ -87,6 +91,38 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy, HandleChart
 
 
   constructor(private _lineChartService: LineChartService, private erdService: ErdService, public translate: TranslateService, private router:Router, private core:CoreService) {
+
+    core.register({observerClass:this, eventName:"LineChartReadyToRender"}).subscribe((evt:CoreEvent) => {
+
+      if(this.renderOrder.indexOf(evt.data.title) == this.nextRender){
+        // Trigger render
+        setTimeout(()=>{
+          core.emit({name:"LineChartStartRender:" + this.renderOrder[this.nextRender], sender:this});
+        }, this.renderDelay);
+      } else {
+        // Put it on the waiting list
+        this.renderQueue.push(evt.data.title);
+      }
+      
+    });
+
+    core.register({observerClass:this, eventName:"LineChartRenderComplete"}).subscribe((evt:CoreEvent) => {
+      this.nextRender++
+      // Take it out of the queue if it's in there
+      if(this.renderQueue.indexOf(evt.data.title) !== -1) {
+        this.renderQueue.splice(this.renderQueue.indexOf(evt.data.title),1);
+      }
+
+      // Trigger next render if the line chart is ready...
+      if(this.renderQueue.indexOf(this.renderOrder[this.nextRender]) !== -1){
+        setTimeout(()=>{
+          core.emit({name:"LineChartStartRender:" + this.renderOrder[this.nextRender], sender:this});
+        }, this.renderDelay);
+      } else {
+       // console.log(this.renderOrder[this.nextRender] + " was not found in the render queue!");
+       // console.log(this.renderQueue);
+      }
+    });
   }
 
   setupSubscriptions(){
@@ -408,6 +444,7 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy, HandleChart
     this.drawTabs = true;
     this.showSpinner = false;
     this.activateTabFromUrl();
+    this.renderOrder = this.tabChartsMappingDataSelected.chartConfigData.map((item) => { return item.title; })
   }// End handleChartConfigDataFunc Method
   
 
@@ -505,6 +542,13 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy, HandleChart
     this.tabSelectChangeHandler(evt);
 
     if(tabName == 'Disk'){ this.diskReportBuilderSetup() }
+
+    // Clear the render queue
+    this.renderQueue = [];
+    this.nextRender = 0;
+    //console.log(this.renderQueue);
+    
+    this.renderOrder = this.tabChartsMappingDataSelected.chartConfigData.map((item) => { return item.title; });
   }
 
   navigateToTab(tabName){

@@ -85,9 +85,9 @@
 
                   <!-- Analytics -->
                   <div fxFlex class="report-analytics" *ngIf="lineChart.legendAnalytics | async as analytics" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="16px">
-                    <span fxFlex="105px"><strong>Min:</strong>  {{analytics[i].min}}<span *ngIf="analytics[i].min !== 'N/A'">{{lineChart.units}}</span></span>
-                      <span fxFlex="105px"><strong>Max:</strong>  {{analytics[i].max}}<span *ngIf="analytics[i].max !== 'N/A'">{{lineChart.units}}</span></span>
-                        <span fxFlex="105px"><strong>Avg:</strong>  {{analytics[i].avg}}<span *ngIf="analytics[i].avg !== 'N/A'">{{lineChart.units}}</span></span>
+                    <span *ngIf="analytics[i].min" fxFlex="105px"><strong>Min:</strong>  {{analytics[i].min}}<span *ngIf="analytics[i].min !== 'N/A'">{{lineChart.units}}</span></span>
+                      <span *ngIf="analytics[i].max" fxFlex="105px"><strong>Max:</strong>  {{analytics[i].max}}<span *ngIf="analytics[i].max !== 'N/A'">{{lineChart.units}}</span></span>
+                        <span *ngIf="analytics[i].avg" fxFlex="105px"><strong>Avg:</strong>  {{analytics[i].avg}}<span *ngIf="analytics[i].avg !== 'N/A'">{{lineChart.units}}</span></span>
                           <span *ngIf="analytics[i].total" fxFlex=""><strong>Total:</strong>  {{analytics[i].total}}<span *ngIf="analytics[i].total !== 'N/A'">{{lineChart.units}}</span></span>
                   </div>
 
