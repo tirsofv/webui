@@ -73,9 +73,9 @@ export class LineChartComponent extends ViewComponent implements OnInit, AfterVi
   culling:number = 6;
   controlUid: string;
 
-
   constructor(private core:CoreService, private _lineChartService: LineChartService) {
     super();
+
     this.legendEvents = new BehaviorSubject(false);
     this.legendLabels = new BehaviorSubject([]);
     this.legendAnalytics = new BehaviorSubject([]);

@@ -107,6 +107,7 @@ export class ReportsDashboardComponent implements OnInit, OnDestroy, HandleChart
     });
 
     core.register({observerClass:this, eventName:"LineChartRenderComplete"}).subscribe((evt:CoreEvent) => {
+      console.log(evt.data.title + " finished!");
       this.nextRender++
       // Take it out of the queue if it's in there
       if(this.renderQueue.indexOf(evt.data.title) !== -1) {
