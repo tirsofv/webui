@@ -139,6 +139,16 @@ export class EmailComponent implements OnDestroy {
       required: true,
       togglePw : true,
       validation : helptext_system_email.em_pass.validation
+    },
+    {
+      type : 'select',
+      name : 'em_auth',
+      placeholder : helptext_system_email.em_auth.placeholder,
+      tooltip : helptext_system_email.em_auth.tooltip,
+      options : [
+        {label : 'SASL', value : 'sasl'},
+        {label : 'LOGIN', value : 'login'}
+      ],
     }
   ];
   protected dialogRef: any;
@@ -148,6 +158,7 @@ export class EmailComponent implements OnDestroy {
   private em_user;
   private em_pwmessage;
   private em_pass;
+  private em_auth;
 
   constructor(protected router: Router, protected rest: RestService,
               protected ws: WebSocketService, protected _injector: Injector,
@@ -167,17 +178,20 @@ afterInit(entityEdit: any) {
     this.em_user = _.find(this.fieldConfig, {'name': 'em_user'});
     this.em_pwmessage = _.find(this.fieldConfig, {'name': 'em_pwmessage'});
     this.em_pass = _.find(this.fieldConfig, {'name': 'em_pass'});
+    this.em_auth = _.find(this.fieldConfig, {'name': 'em_auth'});
 
     this.em_smtp = entityEdit.formGroup.controls['em_smtp'];
     this.em_user['isHidden'] = !this.em_smtp.value;
     this.em_pwmessage['isHidden'] = !this.em_smtp.value;
     this.em_pass['isHidden'] = !this.em_smtp.value;
+    this.em_auth['isHidden'] = !this.em_smtp.value;
 
     this.em_smtp_subscription = this.em_smtp.valueChanges.subscribe((value) => {
       this.em_user['isHidden'] = !value;
       this.em_pwmessage['isHidden'] = !value;
       this.em_pass['isHidden'] = !value;
       this.em_pass.hideButton = !value;
+      this.em_auth['isHidden'] = !value;
     });
   }
 

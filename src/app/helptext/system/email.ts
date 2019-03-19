@@ -68,5 +68,11 @@ export const helptext_system_email = {
  authentication."
     ),
     validation: [Validators.required]
-  }
+  },
+  em_auth: {
+    placeholder: T("Authentication Method"),
+    tooltip: T(
+      'Authentication Method tooltip'
+    )
+  },
 };
