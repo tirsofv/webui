@@ -104,6 +104,8 @@ export class ServiceDDNSComponent {
         entityForm.formGroup.controls['domain'].setValue(res.domain);
       }
       entityForm.formGroup.controls['username'].setValue(res.username);
+      entityForm.formGroup.controls['password'].setValue(res.password);
+      entityForm.formGroup.controls['password2'].setValue(res.password);
       entityForm.formGroup.controls['period'].setValue(res.period);
     })
     entityForm.submitFunction = this.submitFunction;
