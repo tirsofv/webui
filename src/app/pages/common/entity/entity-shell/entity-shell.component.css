@@ -1,0 +1,8 @@
+.shellTooltip {
+  position: absolute !important;
+  right: 20px;
+}
+
+mat-card {
+  min-width: 700px;
+}
