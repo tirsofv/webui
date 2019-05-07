@@ -8,9 +8,10 @@ import {EntityModule} from '../common/entity/entity.module';
 import { ShellComponent } from './shell.component';
 import { routing } from './shell.routing';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgTerminalModule } from 'ng-terminal';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, EntityModule, routing, MaterialModule, TranslateModule],
+  imports: [CommonModule, FormsModule, EntityModule, routing, MaterialModule, TranslateModule, NgTerminalModule],
   declarations: [
     ShellComponent
   ],

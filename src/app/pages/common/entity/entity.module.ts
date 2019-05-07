@@ -18,6 +18,7 @@ import { Ng2DropdownModule } from 'ng2-material-dropdown';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeTableModule } from 'primeng/treetable';
 import { FileSizeModule } from 'ngx-filesize';
+import { NgTerminalModule } from 'ng-terminal';
 
 import { DynamicFieldDirective } from './entity-form/components/dynamic-field/dynamic-field.directive';
 import { FormArrayComponent } from './entity-form/components/form-array/form-array.component';
@@ -57,6 +58,7 @@ import { EntityWizardComponent } from './entity-wizard/entity-wizard.component';
 import { EntityTaskComponent } from './entity-task/entity-task.component';
 import { EntityDialogComponent } from './entity-dialog/entity-dialog.component';
 import { EntitySnackbarComponent } from './entity-snackbar/entity-snackbar.component';
+import { EntityShellComponent } from './entity-shell/entity-shell.component';
 
 import { FormPermissionsComponent } from './entity-form/components/form-permissions/form-permissions.component';
 import { EntityJobComponent } from './entity-job/entity-job.component';
@@ -79,9 +81,10 @@ import { ToolbarMultimenuComponent } from './entity-toolbar/components/toolbar-m
     CommonModule, FormsModule, ReactiveFormsModule,
     MaterialModule, ColorPickerModule, NgxDatatableModule, CdkTableModule, TreeModule.forRoot(),
     Ng2DropdownModule, NgUploaderModule, FlexLayoutModule, TranslateModule,
-    OverlayModule, A11yModule, TreeTableModule, FileSizeModule
+    OverlayModule, A11yModule, TreeTableModule, FileSizeModule, NgTerminalModule
   ],
   declarations: [
+    EntityShellComponent,
     EntityTableComponent,
     EntityTreeTableComponent,
     EntityCardComponent,
@@ -131,6 +134,7 @@ import { ToolbarMultimenuComponent } from './entity-toolbar/components/toolbar-m
     ToolbarMultimenuComponent
   ],
   exports: [
+    EntityShellComponent,
     EntityTemplateDirective,
     EntityFormComponent,
     EntityFormEmbeddedComponent,
