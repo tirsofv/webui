@@ -37,7 +37,7 @@ export interface Shellconfiguration {
   providers: [ShellService],
 })
 
-export class EntityShellComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class EntityShellComponent implements OnInit, OnDestroy, AfterViewInit {
   
   // sets the shell prompt
   @Input() prompt = '';
@@ -52,7 +52,7 @@ export class EntityShellComponent implements OnInit, OnChanges, OnDestroy, After
   public token: any;
   public underlying: Terminal;
   public resizable = true;
-  public fixed = true;
+  public fixed = false;
   private shellSubscription: any;
   rowsControl = new FormControl();
   colsControl = new FormControl();
@@ -96,13 +96,18 @@ export class EntityShellComponent implements OnInit, OnChanges, OnDestroy, After
       this.initializeWebShell(res);
       this.shellSubscription = this.ss.shellOutput.subscribe((value) => {
         if (value !== undefined) {
-          this.child.write(value);
+          value = value.replace(/\r(?!\n)/g, '\r\n');
+          for(let i = 0; i < value.length; i ++) {
+            this.writeSubject.next(value[i]);
+          }
         }
       });
     });
     this.invalidate();
     this.child.keyInput.subscribe((input) => {
-      this.ss.send(input);
+      for (let i = 0; i < input.length; i++) {
+        this.ss.send(input[i]);
+      }
     })
     this.rowsControl.valueChanges.subscribe(()=> {this.invalidate()});
     this.colsControl.valueChanges.subscribe(()=> {this.invalidate()});
@@ -142,24 +147,10 @@ export class EntityShellComponent implements OnInit, OnChanges, OnDestroy, After
   }
 
   onResize(event){
-    // this.resizeTerm();
   }
 
   resetDefault() {
     this.font_size = 14;
-  }
-
-  ngOnChanges(changes: {
-    [propKey: string]: SimpleChange
-  }) {
-    const log: string[] = [];
-    for (const propName in changes) {
-      const changedProp = changes[propName];
-      // reprint prompt
-      if (propName === 'prompt' && this.child != null) {
-        this.child.write(this.clearLine + this.prompt)
-      }
-    }
   }
 
 
