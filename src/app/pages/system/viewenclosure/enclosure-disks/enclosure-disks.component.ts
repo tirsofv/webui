@@ -76,24 +76,24 @@ export class EnclosureDisksComponent implements AfterViewInit, OnChanges, OnDest
     });
 
     core.register({observerClass: this, eventName: 'ThemeChanged'}).subscribe((evt:CoreEvent) => {
-      console.log(evt);
       this.theme = evt.data;
       this.setCurrentView(this.currentView);
     });
 
     core.register({observerClass: this, eventName: 'EnclosureData'}).subscribe((evt:CoreEvent) => {
+      console.log(evt);
       this.system.enclosures = evt.data;
       console.log(this.system);
     });
 
     core.register({observerClass: this, eventName: 'PoolData'}).subscribe((evt:CoreEvent) => {
       this.system.pools = evt.data;
-      core.emit({name: 'EnclosureDataRequest', sender: this});
+      //core.emit({name: 'EnclosureDataRequest', sender: this});
     });
 
 
     core.register({observerClass: this, eventName: 'DisksData'}).subscribe((evt:CoreEvent) => {
-      //console.log(evt);
+      console.log(evt);
       // SIMULATED DATA
       /*let edata = new ExampleData();
       edata.addEnclosure(24); //  M50 24 slots
@@ -113,7 +113,8 @@ export class EnclosureDisksComponent implements AfterViewInit, OnChanges, OnDest
       console.log(evt);
       //this.system_product = evt.data.system_product;
       this.system_product = 'M50'; // Just for testing on my FreeNAS box
-      core.emit({name: 'DisksRequest', sender: this});
+      //core.emit({name: 'DisksRequest', sender: this});
+      core.emit({name: 'EnclosureDataRequest', sender: this});
     });
 
     core.emit({name: 'ThemeDataRequest', sender: this});
@@ -160,7 +161,8 @@ export class EnclosureDisksComponent implements AfterViewInit, OnChanges, OnDest
             const diskName: boolean = mutation.target.classList.contains('disk-name');
         
             if(diskName && this.currentView == 'details' && this.exitingView == 'details'){
-              this.labels.events.next({name:"OverlayReady", data: {vdev: this.selectedVdev, overlay:this.domLabels}, sender: this});
+              //this.labels.events.next({name:"OverlayReady", data: {vdev: this.selectedVdev, overlay:this.domLabels}, sender: this});
+              this.update('stage-right');
             }
             break;
         }
@@ -305,6 +307,7 @@ export class EnclosureDisksComponent implements AfterViewInit, OnChanges, OnDest
 
 
   setCurrentView(opt: string){
+    console.log(this.system);
     if(this.currentView){ this.exitingView = this.currentView; }
     // pools || status || expanders || details
 
@@ -344,6 +347,20 @@ export class EnclosureDisksComponent implements AfterViewInit, OnChanges, OnDest
 
     this.currentView = opt;
     
+  }
+
+  update(className:string){ // only for details view
+ 
+    let sideStage = this.overview.nativeElement.querySelector('.' + this.currentView + '.' + className);
+    let html = this.overview.nativeElement.querySelector('.' + this.currentView + '.' + className + ' .content')
+    let el = styler(html);
+
+    let x = (sideStage.offsetWidth * 0.5) - (el.get('width') * 0.5);
+    let y = sideStage.offsetTop + (sideStage.offsetHeight * 0.5) - (el.get('height') * 0.5);
+    html.style.left = x.toString() + 'px';
+    html.style.top = y.toString() + 'px';
+    this.labels.events.next({name:"OverlayReady", data: {vdev: this.selectedVdev, overlay:this.domLabels}, sender: this});
+  
   }
 
   enter(className:string){ // stage-left or stage-right or expanders
@@ -475,8 +492,10 @@ export class EnclosureDisksComponent implements AfterViewInit, OnChanges, OnDest
     let keys = Object.keys(this.selectedEnclosure.poolKeys);
     if(keys.length > 0){
       this.selectedEnclosure.disks.forEach((disk, index) => {
-        let pIndex = disk.vdev.poolIndex;
-        this.enclosure.events.next({name:"ChangeDriveTrayColor", data:{id: index, color: this.theme[this.theme.accentColors[pIndex]]}});
+        if(disk.vdev){
+          let pIndex = disk.vdev.poolIndex;
+          this.enclosure.events.next({name:"ChangeDriveTrayColor", data:{id: index, color: this.theme[this.theme.accentColors[pIndex]]}});
+        }
       });
     } else {
       return;

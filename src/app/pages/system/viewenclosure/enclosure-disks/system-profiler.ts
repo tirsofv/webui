@@ -54,7 +54,8 @@ export class SystemProfiler {
       // REMOVE THIS FOR PRODUCTION!!!
       //data[index].enclosure.slot = index;
 
-      if( !next || next.enclosure_num > enclosureID ){ 
+      //if( !next || next.enclosure_num > enclosureID ){ 
+      if( !next || item.enclosure.number > enclosureID ){ 
         enclosure.model = enclosureID > 0 ? "ES" +  enclosure.disks.length : this.platform;
         this.profile.push(enclosure);
 
@@ -68,6 +69,7 @@ export class SystemProfiler {
   }
 
   filterSystemDisk(disks){
+    // filter out OS disks
     let sd = [];
     let data = disks.filter((item, index) => {
       if(!item.enclosure){
@@ -88,10 +90,10 @@ export class SystemProfiler {
   
   private parsePoolsData(obj){
     obj.forEach((pool, pIndex) => {     
+      console.log(pool);
       if(!pool.topology){
         return;
       }
-
       pool.topology.data.forEach((vdev, vIndex) => {
 
         let v:VDev = {
@@ -137,11 +139,13 @@ export class SystemProfiler {
     for(let enclosure of this.profile){
       let diskKey = enclosure.diskKeys[diskName];
       let test = typeof diskKey;
+      console.log(enclosure);
+      console.log('diskName = ' + diskName + ' && diskKey = ' + diskKey)
 
       if(test == "undefined") { 
         continue;
       } else {
-        
+        console.log("PASSED THE TEST...");
         enclosure.disks[diskKey].vdev = vdev;
         enclosure.disks[diskKey].status = this.getDiskStatus(diskName, enclosure, vdev);
         if(!enclosure.poolKeys[vdev.pool]){

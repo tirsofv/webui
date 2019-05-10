@@ -161,7 +161,7 @@ export class VDevLabelsSVG {
 
         present = true;
         // Create tile if the disk is in the current enclosure
-        let src = this.chassis.driveTrayObjects[vdev.slots[disk]].container;
+        let src = this.chassis.driveTrayObjects[vdev.slots[disk] - 1].container;
         let tray = src.getGlobalPosition();
 
         let tileClass = "tile tile_" + disk;
@@ -176,9 +176,9 @@ export class VDevLabelsSVG {
     // Template uses CSS to center and align text so 
     // wee need to compensate with absolute positions
     // of wrapper elements
-
+    
     // 1 up
-    let legend = el.nativeElement.childNodes[0].childNodes[0];
+    let legend = el.nativeElement.childNodes[0].childNodes[1];
     
     // 2 up
     let content = el.nativeElement.childNodes[0];
@@ -207,18 +207,19 @@ export class VDevLabelsSVG {
         let startY = tray.y + tray.height / 2;
         let endX = el.offsetLeft + parentOffsets.x//el.offsetParent.offsetLeft;
         let endY = el.offsetTop + parentOffsets.y + (el.offsetHeight / 2);
-        this.createTrace(startX, startY, endX, endY);
+        this.createTrace(startX, startY, endX, endY, disk);
       }
     });
   }
 
-  createTrace(startX,startY, endX, endY){
+  createTrace(startX,startY, endX, endY, diskName){
   
     let svgPath = "M" + startX + " " + startY + " L" + endX + " " + endY + " Z"
 
     this.svg.append("path")
       .attr('d', svgPath)
       .attr('stroke', this.color)
+      .attr('class', diskName)
 
   }
 
