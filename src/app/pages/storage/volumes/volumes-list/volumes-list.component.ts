@@ -23,6 +23,7 @@ import helptext from '../../../../helptext/storage/volumes/volume-list';
 
 import { CoreService } from 'app/core/services/core.service';
 import { SnackbarService } from '../../../../services/snackbar.service';
+import { PreferencesService } from 'app/core/services/preferences.service';
 
 export interface ZfsPoolData {
   avail?: number;
@@ -840,8 +841,8 @@ export class VolumesListComponent extends EntityTableComponent implements OnInit
   constructor(protected core: CoreService ,protected rest: RestService, protected router: Router, protected ws: WebSocketService,
     protected _eRef: ElementRef, protected dialogService: DialogService, protected loader: AppLoaderService,
     protected mdDialog: MatDialog, protected erdService: ErdService, protected translate: TranslateService,
-    public sorter: StorageService, protected snackBar: MatSnackBar, protected snackbarService: SnackbarService) {
-    super(core, rest, router, ws, _eRef, dialogService, loader, erdService, translate, snackBar, sorter);
+    public sorter: StorageService, protected snackBar: MatSnackBar, protected snackbarService: SnackbarService, protected pref: PreferencesService) {
+    super(core, rest, router, ws, _eRef, dialogService, loader, erdService, translate, snackBar, sorter, pref);
   }
 
   public repaintMe() {

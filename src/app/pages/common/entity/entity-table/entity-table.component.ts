@@ -1,24 +1,22 @@
 
-import {fromEvent as observableFromEvent,  Observable ,  BehaviorSubject ,  Subscription } from 'rxjs';
-
-import {distinctUntilChanged, debounceTime} from 'rxjs/operators';
-import { Component, OnInit, OnDestroy ,Input, ElementRef, ViewEncapsulation, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { DataSource } from '@angular/cdk/collections';
-import { MatPaginator, MatSort, PageEvent, MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
+import { CoreEvent, CoreService } from 'app/core/services/core.service';
+import { PreferencesService } from 'app/core/services/preferences.service';
 import * as _ from 'lodash';
-
+import { fromEvent as observableFromEvent, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { DialogService } from '../../../../services';
+import { AppLoaderService } from '../../../../services/app-loader/app-loader.service';
+import { ErdService } from '../../../../services/erd.service';
 //local libs
 import { RestService } from '../../../../services/rest.service';
+import { StorageService } from '../../../../services/storage.service';
 import { WebSocketService } from '../../../../services/ws.service';
-import { EntityUtils } from '../utils';
-import { AppLoaderService } from '../../../../services/app-loader/app-loader.service';
-import { DialogService } from '../../../../services';
-import { ErdService } from '../../../../services/erd.service';
-import { StorageService } from '../../../../services/storage.service'
-import { CoreService, CoreEvent } from 'app/core/services/core.service';
 import { T } from '../../../../translate-marker';
+import { EntityUtils } from '../utils';
 
 export interface InputTableConf {
   prerequisite?: any;
@@ -142,7 +140,10 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(protected core: CoreService, protected rest: RestService, protected router: Router, protected ws: WebSocketService,
     protected _eRef: ElementRef, protected dialogService: DialogService, protected loader: AppLoaderService, 
     protected erdService: ErdService, protected translate: TranslateService, protected snackBar: MatSnackBar,
-    public sorter: StorageService) { 
+    public sorter: StorageService, protected pref: PreferencesService) {
+      if (this.pref.preferences.tableListSize) {
+        this.paginationPageSize = this.pref.preferences.tableListSize;
+      }
       this.core.register({observerClass:this, eventName:"UserPreferencesChanged"}).subscribe((evt:CoreEvent) => {
         this.multiActionsIconsOnly = evt.data.preferIconsOnly;
       });
@@ -267,7 +268,7 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           newData = this.rows;
         }
-        
+
         this.currentRows = newData;
         this.paginationPageIndex  = 0;
         this.setPaginationInfo();

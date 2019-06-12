@@ -1,14 +1,12 @@
-import { ApplicationRef, Input, Output, EventEmitter, Component, Injector, OnInit, ViewContainerRef, OnChanges, OnDestroy } from '@angular/core';
-import { NgModel }   from '@angular/forms';
-import {Router} from '@angular/router';
-import * as _ from 'lodash';
+import { ApplicationRef, Component, Injector, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CoreEvent, CoreService } from 'app/core/services/core.service';
+import { PreferencesService, UserPreferences } from 'app/core/services/preferences.service';
 import { FieldConfig } from 'app/pages/common/entity/entity-form/models/field-config.interface';
 import { FieldSet } from 'app/pages/common/entity/entity-form/models/fieldset.interface';
-import { FormConfig } from 'app/pages/common/entity/entity-form/entity-form-embedded.component';
-import {RestService, WebSocketService} from 'app/services/';
-import { ThemeService, Theme} from 'app/services/theme/theme.service';
-import { CoreService, CoreEvent } from 'app/core/services/core.service';
-import { PreferencesService } from 'app/core/services/preferences.service';
+import { RestService, WebSocketService } from 'app/services/';
+import { ThemeService } from 'app/services/theme/theme.service';
 import { Subject } from 'rxjs';
 import { T } from '../../../../translate-marker';
 
@@ -17,31 +15,17 @@ import { T } from '../../../../translate-marker';
   template:`<entity-form-embedded fxFlex="100" fxFlex.gt-xs="300px" [target]="target" [data]="values" [conf]="this"></entity-form-embedded>`
 })
 export class GeneralPreferencesFormComponent implements OnInit, OnChanges, OnDestroy {
-
-  /*
-   //Preferences Object Structure
-   platform:string; // FreeNAS || TrueNAS
-   timestamp:Date;
-   userTheme:string; // Theme name
-   customThemes?: Theme[];
-   favoriteThemes?: string[]; // Theme Names
-   showTooltips:boolean; // Form Tooltips on/off
-   metaphor:string; // Prefer Cards || Tables || Auto (gui decides based on data array length)
-
-   */
-
   public target: Subject<CoreEvent> = new Subject();
   public values = [];
   public saveSubmitText = "Update Settings";
-  protected isEntity: boolean = true; // was true
-  private colorOptions: any[] = [];
+  protected isEntity: boolean = true;
   private themeOptions: any[] = [];
-  private favoriteFields: any[] = []
   public fieldConfig:FieldConfig[] = [];
   public showTooltips:boolean = this.prefs.preferences.showTooltips;
   public allowPwToggle:boolean = this.prefs.preferences.allowPwToggle;;
   public enableWarning:boolean = this.prefs.preferences.enableWarning;
   public preferIconsOnly: boolean = this.prefs.preferences.preferIconsOnly;
+  public tableListSize: number | null = this.prefs.preferences.tableListSize
   public fieldSetDisplay:string = 'no-margins';//default | carousel | stepper
     public fieldSets: FieldSet[] = [
       {
@@ -97,18 +81,22 @@ export class GeneralPreferencesFormComponent implements OnInit, OnChanges, OnDes
                         configuration file. This dialog appears\
                         after choosing to upgrade the system.'),
             class:'inline'
+          },
+          {
+            type: 'input',
+            inputType: 'number',
+            min: 1,
+            name: 'tableListSize',
+            validation: [Validators.min(1), Validators.pattern(/^-?\d+\d*$/g)],
+            width: '300px',
+            placeholder: 'Table list size',
+            value: this.tableListSize,
+            tooltip: T('The number of items to be displayed in data tables.'),
+            class:'inline'
           }
         ]
       }
     ]
-
-    /*custActions: any[] = [
-      {
-        id: 'create-theme-link',
-        name: 'Create Theme',
-        eventName:"CreateTheme"
-      }
-    ]*/
 
     constructor(
       protected router: Router,
@@ -136,6 +124,15 @@ export class GeneralPreferencesFormComponent implements OnInit, OnChanges, OnDes
       this.core.unregister({observerClass:this});
     }
 
+    beforeSubmit(preferences: { tableListSize: string | number }): void {
+      if (preferences.tableListSize) {
+        preferences.tableListSize = parseInt(preferences.tableListSize as string, 10);
+      }
+      if (typeof preferences.tableListSize === 'string') {
+        preferences.tableListSize = null;
+      }
+    }
+
     init(){
       this.setThemeOptions();
       this.core.register({observerClass:this,eventName:"ThemeListsChanged"}).subscribe((evt:CoreEvent) => {
@@ -155,25 +152,6 @@ export class GeneralPreferencesFormComponent implements OnInit, OnChanges, OnDes
       });
       this.generateFieldConfig();
     }
-
-    /*afterInit(entityForm: any) {
-     }*/
-
-     /*setFavoriteFields(){
-       for(let i = 0; i < this.themeService.freenasThemes.length; i++){
-         let theme = this.themeService.freenasThemes[i];
-         let field = {
-           type: 'checkbox',
-           name: theme.name,
-           width: '200px',
-           placeholder:theme.label,
-           value: false,
-           tooltip: 'Add ' + theme.label + ' to favorites',
-           class:'inline'
-         }
-         this.favoriteFields.push(field);
-       }
-     }*/
 
      setThemeOptions(){
        this.themeOptions.splice(0,this.themeOptions.length);
