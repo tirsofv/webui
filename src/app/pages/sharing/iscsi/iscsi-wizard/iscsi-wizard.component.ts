@@ -768,7 +768,13 @@ export class IscsiWizardComponent {
 
         this.loader.close();
         if (!toStop) {
-            this.router.navigate(new Array('/').concat(this.route_success));
+            this.dialogService.confirm('Connect and Update Initiator ', 'Connect and update initiator <b>' + createdItems.initiator + ' - ' + this.summaryObj.name +'</b>', false).subscribe((res) => {
+                if (res) {
+                    this.router.navigate(['/', 'sharing', 'iscsi', 'initiators', 'edit', createdItems.initiator]);
+                } else {
+                    this.router.navigate(new Array('/').concat(this.route_success));
+                }
+            })
         }
     }
 
