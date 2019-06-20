@@ -353,27 +353,6 @@ export class IscsiWizardComponent {
                     disabled: true,
                 },
             ]
-        },
-        {
-            label: helptext.step3_label,
-            fieldConfig: [
-                {
-                    type: 'input',
-                    name: 'initiators',
-                    placeholder: helptext.initiators_placeholder,
-                    tooltip: helptext.initiators_tooltip,
-                    value: '',
-                    inputType: 'textarea',
-                },
-                {
-                    type: 'input',
-                    name: 'auth_network',
-                    placeholder: helptext.auth_network_placeholder,
-                    tooltip: helptext.auth_network_tooltip,
-                    value: '',
-                    inputType: 'textarea',
-                }
-            ]
         }
     ]
 
@@ -592,7 +571,7 @@ export class IscsiWizardComponent {
     }
 
     summaryInit() {
-        for (let step = 0; step < 3; step++) {
+        for (let step = 0; step < this.wizardConfig.length; step++) {
             Object.entries(this.entityWizard.formArray.controls[step].controls).forEach(([name, control]) => {
                 if (name in this.summaryObj) {
                     (<FormControl>control).valueChanges.subscribe(((value) => {
@@ -634,11 +613,6 @@ export class IscsiWizardComponent {
             'New Authorized Access': {
                 'Group ID': this.summaryObj.tag,
                 'User': this.summaryObj.user,
-            },
-            'Initiator': {
-                'Initiators': this.summaryObj.initiators,
-                'Authorized Networks': this.summaryObj.auth_network,
-                'Comment': this.summaryObj.comment,
             }
         };
         if (this.summaryObj.type === 'FILE') {
@@ -651,16 +625,6 @@ export class IscsiWizardComponent {
 
         this.summaryObj.portal === 'Create New' ? delete summary['Portal'] : delete summary['New Portal'];
         this.summaryObj.auth === 'NEW' ? delete summary['Authorized Access'] : delete summary['New Authorized Access'];
-
-        if (!this.summaryObj.initiators && !this.summaryObj.auth_network && !this.summaryObj.comment) {
-            delete summary['Initiator'];
-        } else if (!this.summaryObj.initiators) {
-            delete summary['Initiator']['Initiators'];
-        } else if (!this.summaryObj.auth_network) {
-            delete summary['Initiator']['Authorized Networks'];
-        } else if (!this.summaryObj.comment) {
-            delete summary['Initiator']['Comment'];
-        }
 
         return summary;
     }
@@ -768,7 +732,7 @@ export class IscsiWizardComponent {
 
         this.loader.close();
         if (!toStop) {
-            this.dialogService.confirm('Connect and Update Initiator ', 'Connect and update initiator <b>' + createdItems.initiator + ' - ' + this.summaryObj.name +'</b>', false).subscribe((res) => {
+            this.dialogService.confirm('Connect and Config Initiator ', 'Connect and config initiator <b>' + createdItems.initiator + ' - ' + this.summaryObj.name +'</b>', false).subscribe((res) => {
                 if (res) {
                     this.router.navigate(['/', 'sharing', 'iscsi', 'initiators', 'edit', createdItems.initiator]);
                 } else {
@@ -831,8 +795,8 @@ export class IscsiWizardComponent {
         }
         if (item === 'initiator') {
             payload = {
-                initiators: value['initiators'].split(' '),
-                auth_network: value['auth_network'].split(' '),
+                initiators: [],
+                auth_network: [],
                 comment: value['name'],
             }
         }
