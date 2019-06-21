@@ -44,4 +44,10 @@ export class InitiatorListComponent {
 
   constructor(protected router: Router) {}
 
+  dataHandler(entityList) {
+    for (let i = 0; i < entityList.rows.length; i++) {
+      entityList.rows[i].initiators = entityList.rows[i].initiators.length === 0 ? 'ALL' : entityList.rows[i].initiators;
+      entityList.rows[i].auth_network = entityList.rows[i].auth_network.length === 0 ? 'ALL' : entityList.rows[i].auth_network;
+    }
+  }
 }
