@@ -22,7 +22,7 @@ export class ISCSI implements OnInit {
     },
     {
       label: 'Initiators',
-      path: '/sharing/iscsi/initiator',
+      path: '/sharing/iscsi/initiators',
     },
     {
       label: 'Authorized Access',

@@ -20,7 +20,7 @@ export class InitiatorFormComponent {
   protected queryCall: string = 'iscsi.initiator.query';
   protected editCall = 'iscsi.initiator.update';
   protected customFilter: Array<any> = [[["id", "="]]];
-  protected route_success: string[] = [ 'sharing', 'iscsi', 'initiator' ];
+  protected route_success: string[] = [ 'sharing', 'iscsi', 'initiators' ];
   protected isEntity: boolean = true;
   protected pk: any;
   protected entityForm: any;
