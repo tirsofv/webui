@@ -4,12 +4,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FieldConfig } from '../../../../common/entity/entity-form/models/field-config.interface';
 import { AppLoaderService } from '../../../../../services/app-loader/app-loader.service';
 import { EntityUtils } from '../../../../common/entity/utils';
-import { WebSocketService } from '../../../../../services/';
+import { WebSocketService, IscsiService } from '../../../../../services/';
 import { helptext_sharing_iscsi } from 'app/helptext/sharing';
+import * as _ from 'lodash';
+import { EntityFormService } from '../../../../common/entity/entity-form/services/entity-form.service';
 
 @Component({
   selector : 'app-iscsi-initiator-form',
-  template : `<entity-form [conf]="this"></entity-form>`
+  template : `<entity-form [conf]="this"></entity-form>`,
+  providers: [IscsiService, EntityFormService]
 })
 export class InitiatorFormComponent {
 
@@ -24,12 +27,21 @@ export class InitiatorFormComponent {
 
   protected fieldConfig: FieldConfig[] = [
     {
-      type : 'input',
-      name : 'initiators',
-      placeholder : helptext_sharing_iscsi.initiator_form_placeholder_initiators,
+      type: 'list',
+      name: 'initiators',
+      placeholder: helptext_sharing_iscsi.initiator_form_placeholder_initiators,
       tooltip: helptext_sharing_iscsi.initiator_form_tooltip_initiators,
-      value: '',
-      inputType : 'textarea',
+      templateListField: [
+        {
+          type: 'combobox',
+          name: 'initiator',
+          placeholder: helptext_sharing_iscsi.initiator_form_placeholder_initiators,
+          tooltip: helptext_sharing_iscsi.initiator_form_tooltip_initiators,
+          options: [],
+          searchOptions: [],
+        },
+      ],
+      listFields: []
     },
     {
       type : 'input',
@@ -47,7 +59,25 @@ export class InitiatorFormComponent {
     },
   ];
 
-  constructor(protected router: Router, protected aroute: ActivatedRoute, protected loader: AppLoaderService, protected ws: WebSocketService) {}
+  constructor(
+    protected router: Router,
+    protected aroute: ActivatedRoute,
+    protected loader: AppLoaderService,
+    protected ws: WebSocketService,
+    protected iscsiService: IscsiService,
+    protected entityFormService: EntityFormService) {
+      const initiatorField = _.find(this.fieldConfig, {name: 'initiators'}).templateListField[0];
+      this.iscsiService.getGlobalSessions().subscribe((res)=> {
+        for (let i = 0; i < res.length; i++) {
+          if (_.find(initiatorField.options, {value: res[i].initiator}) === undefined) {
+            initiatorField.options.push({
+              label: res[i].initiator,
+              value: res[i].initiator
+            })
+          }
+        }
+      });
+  }
 
   preInit() {
     this.aroute.params.subscribe(params => {
@@ -63,14 +93,19 @@ export class InitiatorFormComponent {
   }
 
   resourceTransformIncomingRestData(data) {
-    data['initiators'] = data['initiators'].join(' ');
-    data['auth_network'] = data['auth_network'].join(' ');
+    data['initiators'] = data['initiators'].length === 0 ? ['ALL'] : data['initiators'];
+    data['auth_network'] = data['auth_network'].length === 0 ? 'ALL' : data['auth_network'].join(' ');
     return data;
   }
 
   beforeSubmit(data) {
-    data.initiators = data.initiators.split(' ');
-    data.auth_network = data.auth_network.split(' ');
+    data.initiators = data.initiators.reduce(function(initiators, curr) {
+      if (_.indexOf(initiators, curr.initiator) === -1 && curr.initiator != null && curr.initiator != 'ALL') {
+        initiators.push(curr.initiator);
+      }
+      return initiators;
+    }, []);
+    data.auth_network = (data.auth_network === '' || data.auth_network === 'ALL') ? [] : data.auth_network.split(' ');
   }
 
   customEditCall(value) {
@@ -85,5 +120,18 @@ export class InitiatorFormComponent {
         new EntityUtils().handleWSError(this.entityForm, err);
       }
     );
+  }
+
+  dataHandler(entity) {
+    if (typeof entity.wsResponseIdx === 'object') {
+      for (let i = 0; i < entity.wsResponseIdx.length; i++) {
+        const templateListField = _.cloneDeep(_.find(this.fieldConfig, {'name': 'initiators'}).templateListField);
+        entity.wsfg.push(this.entityFormService.createFormGroup(templateListField));
+        _.find(this.fieldConfig, {'name': 'initiators'}).listFields.push(templateListField);
+        entity.wsfg.controls[i].controls['initiator'].setValue(entity.wsResponseIdx[i]);
+      }
+    } else {
+      entity.wsfg.setValue(entity.wsResponseIdx);
+    }
   }
 }
