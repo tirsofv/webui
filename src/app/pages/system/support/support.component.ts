@@ -437,7 +437,7 @@ export class SupportComponent {
         this.getTrueNASImage(res.system_product)
         _.find(this.fieldConfig, {name : "pic"}).paraText = `<img src="assets/images/${this.product_image}">`;
         _.find(this.fieldConfig, {name : "TN_model"}).paraText += res.system_product;
-        _.find(this.fieldConfig, {name : "TN_custname"}).paraText += res.license.customer || '---';
+        _.find(this.fieldConfig, {name : "TN_custname"}).paraText += res.license.customer_name || '---';
 
         res.license.system_serial_ha ?
           _.find(this.fieldConfig, {name : "TN_sysserial"}).paraText += res.license.system_serial + ' / ' + res.license.system_serial_ha :
@@ -458,7 +458,20 @@ export class SupportComponent {
         }
         _.find(this.fieldConfig, {name : "TN_contracttype"}).paraText += res.license.contract_type;
         _.find(this.fieldConfig, {name : "TN_contractdate"}).paraText += res.license.contract_end.$value + ` (expires in ${daysLeft} days)` || '';
-        _.find(this.fieldConfig, {name : "TN_addhardware"}).paraText += res.license.add_hardware || 'NONE'; 
+
+        let addHardware = res.license.addhw;
+        if (addHardware.length === 0) {
+          _.find(this.fieldConfig, {name : "TN_addhardware"}).paraText += 'NONE';
+        } else {
+          let tempStr = '';
+          for (let i = 0; i < addHardware.length; i++) {
+            tempStr += addHardware[i];
+            if (i < addHardware.length - 1) {
+              tempStr += ', ';
+            }
+          }
+          _.find(this.fieldConfig, {name : "TN_addhardware"}).paraText += tempStr;
+        }
       })
     }
   }
@@ -470,7 +483,7 @@ export class SupportComponent {
       this.product_image = '/servers/X20.png';
     } else if (sys_product.includes('M40')) {
       this.product_image = '/servers/M40.png';
-    }  else if (sys_product.includes('M50')) {
+    } else if (sys_product.includes('M50')) {
       this.product_image = '/servers/M50.png';
     } else if (sys_product.includes('Z20')) {
       this.product_image = '/servers/Z20.png';
