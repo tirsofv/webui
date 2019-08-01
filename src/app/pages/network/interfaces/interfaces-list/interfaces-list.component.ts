@@ -28,8 +28,10 @@ export class InterfacesListComponent implements OnDestroy {
   protected hasDetails = true;
   protected entityList: any;
   protected checkChangesSubscription: any;
+  haschangesStartValue = false;
   public hasPendingChanges = false;
   public checkinWaiting = false;
+  timer: any;
   pending_changes_text: string;
   pending_checkin_text: string;
   checkin_text: string = T("Changes will revert after ");
@@ -160,8 +162,26 @@ export class InterfacesListComponent implements OnDestroy {
 
   checkPendingChanges() {
     this.ws.call('interface.has_pending_changes').subscribe(res => {
+      this.haschangesStartValue = this.hasPendingChanges;
       this.hasPendingChanges = res;
+      if (this.hasPendingChanges && !this.haschangesStartValue) {
+        this.countDown();
+      } 
     });
+  }
+
+  countDown() {
+      this.timer = setInterval(() => {
+        if (this.checkin_timeout > 0) {
+          this.checkin_timeout--;
+        }
+        else {
+          clearInterval(this.timer);
+          setTimeout(() => {
+            this.autoRollback();
+          }, 8000)
+        }
+      }, 1000);
   }
 
   checkWaitingCheckin() {
@@ -192,6 +212,7 @@ export class InterfacesListComponent implements OnDestroy {
   }
 
   commitPendingChanges() {
+    clearInterval(this.timer);
     this.entityList.dialogService.confirm(
       helptext.commit_changes_title,
       helptext.commit_changes_warning,
@@ -260,6 +281,22 @@ export class InterfacesListComponent implements OnDestroy {
           });
         }
       });
+  }
+
+  autoRollback() {
+    this.entityList.loader.open();
+    this.entityList.loaderOpen = true;
+    this.ws.call('interface.rollback').subscribe(res => {
+      this.entityList.loader.close();
+      this.entityList.loaderOpen = false;
+      this.hasPendingChanges = false;
+      this.checkinWaiting = false;
+      this.snackBar.open(helptext.changes_rolled_back, T("Ok"));
+    }, err => {
+      this.entityList.loader.close();
+      this.entityList.loaderOpen = false;
+      new EntityUtils().handleWSError(this.entityList, err);
+    });
   }
 
   /*doAdd() {
