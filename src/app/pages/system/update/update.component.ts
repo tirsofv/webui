@@ -48,6 +48,7 @@ export class UpdateComponent implements OnInit {
   public trainDescriptionOnPageLoad: string;
   public fullTrainList: any[];
   public isFooterConsoleOpen: boolean;
+  public  isfreenas: boolean;
 
   public busy: Subscription;
   public busy2: Subscription;
@@ -189,7 +190,9 @@ export class UpdateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ws.call('user.query',[[["id", "=",1]]]).subscribe((ures) => {
+    window.localStorage.getItem('is_freenas') === 'true' ? this.isfreenas = true : this.isfreenas = false;
+
+        this.ws.call('user.query',[[["id", "=",1]]]).subscribe((ures) => {
       if(ures[0].attributes.preferences !== undefined && ures[0].attributes.preferences.enableWarning) {
         ures[0].attributes.preferences['enableWarning'] = true;
         this.ws.call('user.set_attribute', [1, 'preferences', ures[0].attributes.preferences]).subscribe((res) => {
