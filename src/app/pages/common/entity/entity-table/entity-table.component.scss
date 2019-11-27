@@ -18,6 +18,8 @@
 .multiActionsButton {
     position: relative;
     top: 1px;
+    padding:16px;
+    color:var(--fg2);
 }
 
 #col-select-box {
@@ -79,6 +81,10 @@
 
 #filter .mat-form-field{
   padding-left:32px;
+}
+
+.mat-toolbar{
+  background-color:var(--bg1);
 }
 
 //#filter {
@@ -149,4 +155,6 @@
     }
 }
 
-
+.ngx-datatable.material{
+  color:var(--fg2) !important;
+}

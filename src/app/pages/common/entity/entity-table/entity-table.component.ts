@@ -100,8 +100,10 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('defaultMultiActions', { static: false}) defaultMultiActions: ElementRef;
   @ViewChild('entityTable', { static: false}) table: any;
 
+  public presentation: string = 'page';
+
   // MdPaginator Inputs
-  public paginationPageSize: number = 8;
+  public paginationPageSize: number = 28;
   public paginationPageSizeOptions = [5, 10, 20, 100, 1000];
   public paginationPageIndex = 0;
   public paginationPageEvent: any;

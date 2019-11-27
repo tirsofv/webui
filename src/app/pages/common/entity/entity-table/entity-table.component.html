@@ -1,4 +1,4 @@
-<div id="entity-table-component" class="material mat-card mat-card-table">
+<div id="entity-table-component" [ngClass]="{'mat-card material mat-card-table': presentation == 'card'}" class="">
   <div class="mat-toolbar mat-card-toolbar" *ngIf="hideTopActions === false" fxLayout="row wrap"
     fxLayoutAlign="space-between center">
     <div fxFlex="300px" class="mat-card-title-text">{{ title | translate }}</div>
@@ -147,11 +147,11 @@
       [columnMode]="'force'"
       [columnWidth]="'auto'"
       [headerHeight]="'50'"
-      [footerHeight]="'50'"
+      [footerHeight]="'0'"
       [rowHeight]="50"
       [reorderable]="true"
       [limit]="paginationPageSize"
-      [externalPaging]="true"
+      [externalPaging]="false"
       [count]="currentRows.length || 1"
       [offset]="paginationPageIndex"
       (page)='paginationUpdate($event)'
@@ -160,7 +160,6 @@
       [selectionType]="'checkbox'"
       [selected]='selected'
       (select)='onSelect($event)'
-      [style.height.px]="tableHeight"
       [scrollbarH]='true'
       [scrollbarV]='true'
       #entityTable>
@@ -230,6 +229,31 @@
           </div>
         </ng-template>
       </ngx-datatable-column>
+
+      <!-- detail toggle / three-dot menu -->
+      <ngx-datatable-column
+        [width]="60"
+        [resizeable]="false"
+        [sortable]="false"
+        [draggable]="false"
+        [canAutoResize]="false">
+        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+          <a
+            *ngIf="hasDetails(); else threeDot"
+            href="javascript:void(0)"
+            [class.datatable-icon-right]="!expanded"
+            [class.datatable-icon-down]="expanded"
+            title="Expand/Collapse Row"
+            (click)="toggleExpandRow(row)"
+            ix-datatable-cell="expander"
+            [ix-datatable-cell-identifier]="row[conf.rowIdentifier || 'name']">
+          </a>
+          <ng-template #threeDot>
+            <app-entity-table-actions [entity]="this" [row]="row"></app-entity-table-actions>
+          </ng-template>
+        </ng-template>
+      </ngx-datatable-column>
+
       <ngx-datatable-column
           *ngFor="let col of alwaysDisplayedCols"
           prop="{{col.prop}}"
@@ -315,30 +339,6 @@
               </ng-template>
             </div>
           </div>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- detail toggle / three-dot menu -->
-      <ngx-datatable-column
-        [width]="60"
-        [resizeable]="false"
-        [sortable]="false"
-        [draggable]="false"
-        [canAutoResize]="false">
-        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
-          <a
-            *ngIf="hasDetails(); else threeDot"
-            href="javascript:void(0)"
-            [class.datatable-icon-right]="!expanded"
-            [class.datatable-icon-down]="expanded"
-            title="Expand/Collapse Row"
-            (click)="toggleExpandRow(row)"
-            ix-datatable-cell="expander"
-            [ix-datatable-cell-identifier]="row[conf.rowIdentifier || 'name']">
-          </a>
-          <ng-template #threeDot>
-            <app-entity-table-actions [entity]="this" [row]="row"></app-entity-table-actions>
-          </ng-template>
         </ng-template>
       </ngx-datatable-column>
     </ngx-datatable>
