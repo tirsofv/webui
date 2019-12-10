@@ -8,7 +8,7 @@ import { T } from '../../../../../../translate-marker';
     template : `<entity-table [title]="title" [conf]="this"></entity-table>`
   })
   export class RSYNCconfigurationListComponent {
-    public title = "RSYNC Modules";
+    public title = T('Rsync Modules');
     protected queryCall = 'rsyncmod.query';
     protected hasDetails = true;
     protected entityList: any;

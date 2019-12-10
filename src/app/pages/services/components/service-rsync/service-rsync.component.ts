@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { T } from '../../../../translate-marker';
 
 import * as _ from 'lodash';
 
@@ -13,11 +14,11 @@ export class ServiceRSYNCComponent implements OnInit {
 
   public activedTab = 'Configuration';
   public navLinks: Array < any > = [{
-      label: 'Configure',
+      label: T('Configure'),
       path: '/services/rsync/configure',
     },
     {
-      label: 'Rsync Module',
+      label: T('Rsync Modules'),
       path: '/services/rsync/rsync-module',
     },
   ];

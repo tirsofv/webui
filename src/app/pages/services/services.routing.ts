@@ -58,21 +58,21 @@ export const routes: Routes = [
       {
         path: 'configure',
         component: CconfigureRYSNCComponent,
-        data: { title: 'Configure', breadcrumb: 'Configure' },
+        // data: { title: 'Configure', breadcrumb: 'Configure' },
       },
       {
         path: 'rsync-module',
         component: RSYNCconfigurationListComponent,
-        data: { title: 'RSYNCModule', breadcrumb: 'RSYNCModule' },
+        // data: { title: 'Rsync Module', breadcrumb: 'Rsync Module' },
       },
       {
         path: 'rsync-module/add',
         component: RYSNCConfigurationFormComponent,
-        data: { title: 'Add', breadcrumb: 'Add' },
+        // data: { title: 'Add', breadcrumb: 'Add' },
       },
       {
         path : 'rsync-module/edit/:pk', component : RYSNCConfigurationFormComponent,
-        data: {title: 'Edit', breadcrumb:'Edit' }
+        // data: {title: 'Edit', breadcrumb:'Edit' }
       },
     ]
   },
