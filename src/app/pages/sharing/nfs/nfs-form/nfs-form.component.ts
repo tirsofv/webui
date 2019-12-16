@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { helptext_sharing_nfs, shared } from 'app/helptext/sharing';
 import { FieldSets } from 'app/pages/common/entity/entity-form/classes/field-sets';
@@ -23,7 +22,6 @@ export class NFSFormComponent {
   protected pk: number;
   protected queryKey = 'id';
   protected isEntity = true;
-  protected formArray: FormArray;
   protected isBasicMode = true;
   public entityForm: any;
   public save_button_enabled = true;
@@ -36,7 +34,6 @@ export class NFSFormComponent {
         {
           type: 'list',
           name : 'paths',
-          initialCount: 1,
           templateListField: [{
             name: 'path',
             placeholder: helptext_sharing_nfs.placeholder_path,
@@ -168,8 +165,6 @@ export class NFSFormComponent {
   ]);
 
   protected arrayControl: any;
-  protected initialCount = 1;
-  protected initialCount_default = 1;
 
   public custActions: Array<any> = [
     {
@@ -212,7 +207,6 @@ export class NFSFormComponent {
     this.arrayControl = this.fieldSets.config('paths');
     this.route.params.subscribe(params => {
       if(params['pk']) {
-        this.arrayControl.initialCount = this.initialCount = this.initialCount_default = 0;
         this.pk = parseInt(params['pk'], 10);
 
         this.ws.call('sharing.nfs.query', [[['id', '=', this.pk]]]).subscribe(console.log);
@@ -227,7 +221,6 @@ export class NFSFormComponent {
 
   afterInit(EntityForm: any) {
     this.entityForm = EntityForm;
-    this.formArray = EntityForm.formGroup.controls['paths'];
 
     this.userService.userQueryDSCache().subscribe(items => {
       const users = [{
@@ -327,9 +320,6 @@ export class NFSFormComponent {
     } else if (actionId === 'basic_mode' && this.isBasicMode === true) {
       return false;
     }
-    if (actionId === 'remove_path' && this.initialCount <= this.initialCount_default) {
-      return false;
-    }
     return true;
   }
 
@@ -341,14 +331,12 @@ export class NFSFormComponent {
     return paths;
   }
 
-  clean(data) {
+  resourceTransformIncomingRestData(data) {
     const paths = [];
-    for (let i = 0; i < data.paths.length; i++) {
-      if(!data.paths[i]['delete']) {
-        paths.push(data.paths[i]['path']);
-      }
+    for (let i = 0; i < data['paths'].length; i++) {
+      paths.push({'path':data['paths'][i]});
     }
-    data.paths = paths;
+    data['paths'] = paths;
     return data;
   }
 
