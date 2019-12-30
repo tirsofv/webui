@@ -28,6 +28,8 @@ export class TaskManagerComponent implements OnInit, OnDestroy{
   displayedColumns = ['state', 'method', 'percent'];
   private subscrition: Subscription;
   public expandedElement: any | null;
+  public locale = 'en-US';
+  public timeZone: string;
 
   constructor(
     public dialogRef: MatDialogRef<TaskManagerComponent>,
@@ -54,6 +56,10 @@ export class TaskManagerComponent implements OnInit, OnDestroy{
       (err)=> {
 
       });
+
+      this.ws.call('system.info').subscribe((res) => {
+        this.timeZone = res.timezone;
+      })
 
       this.getData().subscribe(
         (res) => { 
@@ -93,7 +99,9 @@ export class TaskManagerComponent implements OnInit, OnDestroy{
 
   getReadableDate(data: any) {
     if (data != null) {
-      return new Date(data.$date);
+      const readableDate = new Date(data.$date);
+      return readableDate.toLocaleString(this.locale, {timeZone: this.timeZone});
+
     }
     return;
   }
