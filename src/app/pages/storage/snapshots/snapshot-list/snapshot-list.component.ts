@@ -1,6 +1,7 @@
 import { ApplicationRef, Component, Injector } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WebSocketService } from 'app/services';
+import { LocaleService } from 'app/services/locale.service';
 import { Subscription } from 'rxjs';
 import { T } from '../../../../translate-marker';
 import { EntityUtils } from '../../../common/entity/utils';
@@ -17,7 +18,8 @@ export class SnapshotListComponent {
 
   public title = "Snapshots";
   protected queryCall = 'zfs.snapshot.query';
-  protected queryCallOption = [[["pool", "!=", "freenas-boot"]], {"select": ["name"], "order_by": ["name"]}];
+  // protected queryCallOption = [[["pool", "!=", "freenas-boot"]], {"select": ["name"], "order_by": ["name"]}];
+  protected queryCallOption = [[["pool", "!=", "freenas-boot"]], {"order_by": ["name"]}];
   protected route_add: string[] = ['storage', 'snapshots', 'add'];
   protected route_add_tooltip = "Add Snapshot";
   protected wsDelete = 'zfs.snapshot.delete';
@@ -29,8 +31,14 @@ export class SnapshotListComponent {
   public busy: Subscription;
   public sub: Subscription;
   public columns: Array<any> = [
-    {name : 'Dataset', prop : 'dataset', always_display: true, minWidth: 355},
-    {name : 'Snapshot', prop : 'snapshot', always_display: true, minWidth: 355},
+    // {name : 'Dataset', prop : 'dataset', always_display: true, minWidth: 355},
+    // {name : 'Snapshot', prop : 'snapshot', always_display: true, minWidth: 355},
+    {name : 'Dataset', prop : 'dataset', always_display: true},
+    {name : 'Snapshot', prop : 'snapshot', always_display: true},
+    {name : 'Used', prop : 'used', always_display: true},
+    {name : 'Creation', prop : 'creation', always_display: true},
+    {name : 'Compression', prop : 'compressratio'},
+
   ];
   public rowIdentifier = 'dataset';
   public config: any = {
@@ -102,9 +110,16 @@ export class SnapshotListComponent {
 
   constructor(protected _router: Router, protected _route: ActivatedRoute,
     protected ws: WebSocketService,
-    protected _injector: Injector, protected _appRef: ApplicationRef) { }
+    protected _injector: Injector, protected _appRef: ApplicationRef,
+    protected localeService: LocaleService) { }
 
   resourceTransformIncomingRestData(rows: any) {
+    console.log(rows)
+    rows.map(row => {
+      row.used = row.properties.used.rawvalue;
+      row.creation = this.localeService.formatDateTime(row.properties.creation.parsed.$date);
+      row.compressratio = row.properties.compressratio.value;     
+    })
     return rows;
   }
 
