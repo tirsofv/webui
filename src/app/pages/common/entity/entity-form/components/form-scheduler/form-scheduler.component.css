@@ -227,6 +227,10 @@ mat-form-field.cron-presets{
   }
 }
 
+.preset-description {
+  opacity: .6;
+}
+
 .time-zone-label {
   margin: 0 0 10px 20px;
 }
