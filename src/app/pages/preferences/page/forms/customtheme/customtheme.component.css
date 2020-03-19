@@ -7,22 +7,19 @@
   z-index:-10;
 }
 
-#page-content{ 
+#page-content{
   padding:32px;
   z-index: 0;
   position:absolute;
   width:100%;
+  max-width: 1200px;
   height:calc(100vh - 83px);
   top:88px;
   overflow:auto;
 }
 
 :host ::ng-deep #theme-preview div.mat-tab-body-content{
-  padding:16px 16px 64px;
-}
-
-.mat-card#custom-theme-form{
-  width:400px;
+  padding:16px 16px;
 }
 
 .mat-card.content {
@@ -78,8 +75,9 @@
 }
 
 #theme-preview .mat-card{
-  height:75vh;
+  height:661px;
   overflow:auto;
+  min-width: 300px;
 }
 
 .button-row:not(:last-child) {
@@ -94,5 +92,9 @@
 
 .form-field-wrapper {
   margin-bottom: 10px;
+}
+
+#theme-wrapper {
+  width: 100%;
 }
 
