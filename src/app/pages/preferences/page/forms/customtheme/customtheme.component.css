@@ -77,7 +77,7 @@
 #theme-preview .mat-card{
   height:661px;
   overflow:auto;
-  min-width: 300px;
+  min-width: 250px;
 }
 
 .button-row:not(:last-child) {

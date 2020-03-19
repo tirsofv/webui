@@ -40,7 +40,7 @@ export class CustomThemeComponent implements OnInit, AfterViewInit, OnChanges, O
   public goBack = true;
 
   get flexForm(){
-    return this._globalPreview ? '432px' : '100%';
+    return this._globalPreview ? '442px' : '100%';
   }
 
   // EXAMPLE THEME
@@ -486,7 +486,7 @@ export class CustomThemeComponent implements OnInit, AfterViewInit, OnChanges, O
       let ct = Object.assign({},theme);
       let keys = Object.keys(ct);
       //let palette = keys.splice(0,4);
-      let palette = keys.filter((v) => { 
+      let palette = keys.filter((v) => {
         return v != 'name' && v != 'label' && v != 'labelSwatch' && v != 'description' && v != '';
       });
 
@@ -500,7 +500,7 @@ export class CustomThemeComponent implements OnInit, AfterViewInit, OnChanges, O
     updatePreview(theme:Theme){
       let palette = Object.keys(theme);
       palette.splice(0,5);
-      
+
       palette.forEach((color)=>{
       let swatch = theme[color];
       (<any>document).querySelector('#theme-preview').style.setProperty("--" + color, theme[color]);
