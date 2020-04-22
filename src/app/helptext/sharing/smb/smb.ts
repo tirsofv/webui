@@ -139,6 +139,12 @@ export const helptext_sharing_smb = {
     action_share_acl: T('Edit Share ACL'),
     action_edit_acl: T('Edit Filesystem ACL'),
 
+    action_edit_acl_dialog: {
+      title: T('Error'),
+      msg1: T('The path for'),
+      msg2: T('was not found. The pool or dataset may be locked.'),
+   },
+
     dialog_warning: T('Warning'),
     dialog_warning_message: T("Setting default permissions will reset the permissions of this share and any others within its path."),
 

@@ -87,8 +87,22 @@ export class SMBListComponent {
         label: helptext_sharing_smb.action_edit_acl,
         onClick: row => {
           const datasetId = rowName;
-          this.router.navigate(
-            ["/"].concat(["storage", "pools", "id", poolName, "dataset", "acl", datasetId]));
+          this.ws.call('filesystem.stat', [row.path]).subscribe(res => {
+            console.log(row.path)
+            if (res) { console.log(res)
+              this.router.navigate(
+                ["/"].concat(["storage", "pools", "id", poolName, "dataset", "acl", datasetId]));
+            }
+          }, err => {
+            if (err.reason.includes('ENOENT')) {
+              this.dialogService.errorReport(helptext_sharing_smb.action_edit_acl_dialog.title,
+                `${helptext_sharing_smb.action_edit_acl_dialog.msg1} <i>${row.name}</i> 
+                 ${helptext_sharing_smb.action_edit_acl_dialog.msg2}`);
+            } else {
+              this.dialogService.errorReport(helptext_sharing_smb.action_edit_acl_dialog.title,
+                err.reason, err.trace.formatted)
+            }
+          })
         }
       },
       {

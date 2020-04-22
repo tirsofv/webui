@@ -357,7 +357,8 @@ export class SMBFormComponent {
     const datasetId = sharePath.replace('/mnt/', '');
     const poolName = datasetId.split('/')[0];
     const homeShare = entityForm.formGroup.get('home').value;
-    const ACLRoute = ['storage', 'pools', 'id', poolName, 'dataset', 'acl', datasetId]
+    const ACLRoute = ['storage', 'pools', 'id', poolName, 'dataset', 'acl', datasetId];
+    const shareName = entityForm.formGroup.get('name').value;
 
     if (homeShare && entityForm.isNew) {
       return this.router.navigate(
@@ -386,9 +387,25 @@ export class SMBFormComponent {
         ),
         tap(([doConfigureACL, dataset]) =>
           doConfigureACL
-            ? this.router.navigate(
-                ['/'].concat(ACLRoute)
-              )
+            ? 
+            this.ws.call('filesystem.stat', [sharePath]).subscribe(res => {
+              console.log(res, sharePath)
+              if (res) {
+                this.router.navigate(
+                  ['/'].concat(ACLRoute)
+                )
+              }
+            }, err => {
+              if (err.reason.includes('ENOENT')) {
+                this.dialog.errorReport(helptext_sharing_smb.action_edit_acl_dialog.title,
+                  `${helptext_sharing_smb.action_edit_acl_dialog.msg1} <i>${shareName}</i> 
+                   ${helptext_sharing_smb.action_edit_acl_dialog.msg2}`);
+              } else {
+                this.dialog.errorReport(helptext_sharing_smb.action_edit_acl_dialog.title,
+                  err.reason, err.trace.formatted)
+              }
+            })
+
             : this.router.navigate(['/'].concat(this.route_success))
         )
       );
