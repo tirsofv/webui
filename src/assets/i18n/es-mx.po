@@ -13529,13 +13529,13 @@ msgid "Zero Device Numbers"
 msgstr ""
 
 msgid "Zvol Actions"
-msgstr ""
+msgstr "Zvol Acciones"
 
 msgid "Zvol Location"
-msgstr ""
+msgstr "Zvol Ubicación"
 
 msgid "Zvol name"
-msgstr ""
+msgstr "Zvol nombre"
 
 msgid ""
 "[Use fewer transactions in exchange for more "
@@ -13595,7 +13595,7 @@ msgid "allow_vmm"
 msgstr ""
 
 msgid "are the best place to ask questions and interact with fellow TrueNAS"
-msgstr ""
+msgstr "son el mejor lugar para hacer preguntas e interactuar con otros seguidores de TrueNAS"
 
 msgid "assign_localhost"
 msgstr ""
@@ -13616,10 +13616,10 @@ msgid "children_max"
 msgstr ""
 
 msgid "click here"
-msgstr ""
+msgstr "click aquí"
 
 msgid "close"
-msgstr ""
+msgstr "cerrado"
 
 msgid "comment"
 msgstr ""
@@ -13634,37 +13634,37 @@ msgid "cputime"
 msgstr ""
 
 msgid "createcomputer"
-msgstr ""
+msgstr "crear computadora"
 
 msgid "datasize"
-msgstr ""
+msgstr "tamaño de datos"
 
 msgid "days"
-msgstr ""
+msgstr "días"
 
 msgid "depends"
-msgstr ""
+msgstr "depende"
 
 msgid "destroy"
-msgstr ""
+msgstr "destruir"
 
 msgid "details"
-msgstr ""
+msgstr "detalles"
 
 msgid "devfs_ruleset"
 msgstr ""
 
 msgid "email"
-msgstr ""
+msgstr "correo"
 
 msgid "empty"
-msgstr ""
+msgstr "vacío"
 
 msgid "enforce_statfs"
 msgstr ""
 
 msgid "error"
-msgstr ""
+msgstr "error"
 
 msgid "exec_clean"
 msgstr ""
@@ -13709,7 +13709,7 @@ msgid "gathering info..."
 msgstr ""
 
 msgid "group"
-msgstr ""
+msgstr "grupo"
 
 msgid "host_domainname"
 msgstr ""
@@ -13739,10 +13739,10 @@ msgid ""
 msgstr ""
 
 msgid "iXsystems for more information."
-msgstr ""
+msgstr "iXsystems para mas información"
 
 msgid "interfaces"
-msgstr ""
+msgstr "interfaces"
 
 msgid "ip4"
 msgstr ""
@@ -13760,15 +13760,15 @@ msgid "ip_hostname"
 msgstr ""
 
 msgid "is Free and"
-msgstr ""
+msgstr "es gratis y"
 
 msgid ""
 "is a collaborative website     with helpful guides and information about "
 "your new storage system."
-msgstr ""
+msgstr "su nuevo sistema de almacenamiento"
 
 msgid "is already in use."
-msgstr ""
+msgstr "está en uso"
 
 msgid "jail_zfs"
 msgstr ""
@@ -13780,7 +13780,7 @@ msgid "jail_zfs_mountpoint"
 msgstr ""
 
 msgid "list"
-msgstr ""
+msgstr "lista"
 
 msgid "login_flags"
 msgstr ""
@@ -13822,16 +13822,16 @@ msgid "msgqsize"
 msgstr ""
 
 msgid "multipath"
-msgstr ""
+msgstr "multiruta"
 
 msgid "name"
-msgstr ""
+msgstr "nombre"
 
 msgid "nmsgq"
 msgstr ""
 
 msgid "no"
-msgstr ""
+msgstr "no"
 
 msgid "nsemop"
 msgstr ""
@@ -13855,10 +13855,10 @@ msgid "overview"
 msgstr ""
 
 msgid "owner"
-msgstr ""
+msgstr "propietario"
 
 msgid "password"
-msgstr ""
+msgstr "contraseña"
 
 msgid "pbkdf2iters"
 msgstr ""
@@ -13867,16 +13867,16 @@ msgid "pcpu"
 msgstr ""
 
 msgid "priority"
-msgstr ""
+msgstr "prioritario"
 
 msgid "pseudoterminals"
 msgstr ""
 
 msgid "reset"
-msgstr ""
+msgstr "reiniciar"
 
 msgid "resolver"
-msgstr ""
+msgstr "resolver"
 
 msgid "rlimits"
 msgstr ""
@@ -13888,7 +13888,7 @@ msgid "rpc.statd(8) bind port"
 msgstr ""
 
 msgid "safe"
-msgstr ""
+msgstr "seguro"
 
 msgid "seconds unless KEEP CHANGES is chosen to make them permanent."
 msgstr ""
@@ -13930,7 +13930,7 @@ msgid "sysvshm"
 msgstr ""
 
 msgid "template"
-msgstr ""
+msgstr "plantilla"
 
 msgid "threads"
 msgstr ""
@@ -13939,10 +13939,10 @@ msgid "to set up configuration first."
 msgstr ""
 
 msgid "total available"
-msgstr ""
+msgstr "total disponible"
 
 msgid "users"
-msgstr ""
+msgstr "usuarios"
 
 msgid "vmemoryuse"
 msgstr ""
@@ -13978,4 +13978,4 @@ msgid "while pool is encrypted"
 msgstr ""
 
 msgid "yes"
-msgstr ""
+msgstr "sí"
