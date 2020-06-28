@@ -8,31 +8,31 @@ msgid " Built-in Groups"
 msgstr ""
 
 msgid " Builtin Users"
-msgstr ""
+msgstr "Usuarios Incorporados"
 
 msgid " Check Notifications for more details."
-msgstr ""
+msgstr "Revise Notificaciones para más detalles"
 
 msgid " Download Updates"
-msgstr ""
+msgstr " Descargar Actualizaciones"
 
 msgid " First data vdev is a "
-msgstr ""
+msgstr " El primer vdev de datos es un"
 
 msgid " First vdev has "
-msgstr ""
+msgstr " El primver vdev tiene "
 
 msgid " First vdev is a "
-msgstr ""
+msgstr " El primer vdev es un"
 
 msgid " KiB."
-msgstr ""
+msgstr " KiB"
 
 msgid " Plugin"
-msgstr ""
+msgstr "Complemento"
 
 msgid " Service"
-msgstr ""
+msgstr "Servicio"
 
 msgid ""
 " When the <b>UPS Mode</b> is set to <i>slave</i>. Enter the open network "
@@ -52,43 +52,43 @@ msgid ""
 msgstr ""
 
 msgid " and "
-msgstr ""
+msgstr " y "
 
 msgid " and all snapshots of it?"
-msgstr ""
+msgstr " y todas sus instantáneas"
 
 msgid " and will be disrupted if the pool is detached:"
-msgstr ""
+msgstr " y se interrumpirá si el agrupamiento se separa:"
 
 msgid " and will be disrupted if the pool is locked:"
-msgstr ""
+msgstr " y se interrumpirá si el agrupamiento esta bloqueado"
 
 msgid " built-in groups (default setting is <i>hidden</i>)."
 msgstr ""
 
 msgid " builtin users (default setting is <i>hidden</i>)."
-msgstr ""
+msgstr " usuarios incorporados (configuración predeterminada es <i>ocultos</i> "
 
 msgid " but datastore "
-msgstr ""
+msgstr " pero el almacén de datos"
 
 msgid " disks"
-msgstr ""
+msgstr " discos"
 
 msgid " disks, new vdev has "
-msgstr ""
+msgstr " discos, nuevo vdev tiene "
 
 msgid " has been unlocked."
-msgstr ""
+msgstr " ha sido desbloqueado."
 
 msgid " is "
-msgstr ""
+msgstr " es "
 
 msgid " is a required field."
-msgstr ""
+msgstr " es un campo obligatorio."
 
 msgid " is required."
-msgstr ""
+msgstr " es obligatorio."
 
 msgid ""
 " is still running,  the Guest OS did not respond as expected. It is "
@@ -102,43 +102,43 @@ msgid ""
 msgstr ""
 
 msgid " official plugins"
-msgstr ""
+msgstr " complementos oficiales"
 
 msgid " seconds"
-msgstr ""
+msgstr " segundos"
 
 msgid " seconds."
-msgstr ""
+msgstr " segundos."
 
 msgid " service has been enabled."
-msgstr ""
+msgstr " el servicio ha sido habilitado"
 
 msgid " should be at least "
-msgstr ""
+msgstr " debería ser al menos "
 
 msgid " should be no more than "
-msgstr ""
+msgstr " no debe ser más que "
 
 msgid " successfully saved."
-msgstr ""
+msgstr " guardado con éxito."
 
 msgid " successfully unlocked"
-msgstr ""
+msgstr " desbloqueado con éxito"
 
 msgid " system is powered on and connected to the network."
-msgstr ""
+msgstr " el sistema esta encendido y conectado a la red."
 
 msgid " to include all "
-msgstr ""
+msgstr " para incluir todo"
 
 msgid " update successful"
-msgstr ""
+msgstr " actualizado con éxito"
 
 msgid " updated."
-msgstr ""
+msgstr " actualizado"
 
 msgid "% of all cores"
-msgstr ""
+msgstr "% de todos los núcleos"
 
 msgid ""
 "' is encrypted! If the passphrase for this encrypted pool has been lost, "
@@ -148,31 +148,31 @@ msgid ""
 msgstr ""
 
 msgid "'. All data on that pool was destroyed."
-msgstr ""
+msgstr "'. Todos los datos de este grupo fueron destruidos."
 
 msgid "(24 Hours)"
-msgstr ""
+msgstr "(24 Horas)"
 
 msgid "(Examples: 500 KiB, 500M, 2 TB)"
-msgstr ""
+msgstr "(Ejemplos: 500 KiB, 500M, 2 TB)"
 
 msgid "(Legacy Encryption)"
-msgstr ""
+msgstr "(Cifrado Heredado)"
 
 msgid "(No description)"
-msgstr ""
+msgstr "(Sin descripción)"
 
 msgid "(Remove pool from database)"
-msgstr ""
+msgstr "(Remover grupo de la base de datos)"
 
 msgid "(top-right), then"
-msgstr ""
+msgstr "(arriba a la derecha), entonces"
 
 msgid ", new Metadata vdev is a "
-msgstr ""
+msgstr ", nuevo Metadado vdev es un"
 
 msgid ", new vdev is "
-msgstr ""
+msgstr ", nuevo vdev es"
 
 msgid ". At least one is required."
 msgstr ""
